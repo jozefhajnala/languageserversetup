@@ -5,9 +5,8 @@ lg <- function(...) {
   invisible()
 }
 
-
 askYesNo <- if (
-  is.element("package:utils", find("askYesNo", mode = "function"))
+  is.element("package:utils", utils::find("askYesNo", mode = "function"))
 ) {
   utils::askYesNo
 } else {
@@ -53,3 +52,21 @@ askYesNo <- if (
   }
 }
 
+get_process_args <- function() {
+  if (tolower(Sys.info()[["sysname"]]) == "windows") {
+    list(
+      command = "wmic",
+      args = paste0(
+        "process where processid=", Sys.getpid(),
+        " get commandline"
+      ),
+      stdout = TRUE
+    )
+  } else {
+    list(
+      command = "ps",
+      args = c("-p", Sys.getpid(),  "-o", "cmd", "--no-headers"),
+      stdout = TRUE
+    )
+  }
+}

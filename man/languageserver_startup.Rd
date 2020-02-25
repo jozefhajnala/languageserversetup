@@ -6,8 +6,7 @@
 \usage{
 languageserver_startup(rlsLib = getOption("langserver_library"),
   langServerProcessPatt = getOption("langserver_processPatt"),
-  strictLibrary = TRUE, processArgs = list(command = "ps", args = c("-p",
-  Sys.getpid(), "-o", "cmd", "--no-headers"), stdout = TRUE))
+  strictLibrary = TRUE, processArgs = get_process_args())
 }
 \arguments{
 \item{rlsLib}{\code{character(1)} path to the library.}
@@ -22,6 +21,9 @@ in \code{.libPaths()} will be installed.}
 
 \item{processArgs}{\code{list()} of arguments to \code{system2} to
 retrieve a list of processes.}
+}
+\value{
+side-effects
 }
 \description{
 Prepare languageserver to be started

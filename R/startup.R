@@ -5,19 +5,13 @@
 #' @param processArgs `list()` of arguments to `system2` to
 #'   retrieve a list of processes.
 #'
-#' @return
+#' @return side-effects
 #' @export
-#'
-#' @examples
 languageserver_startup <- function(
   rlsLib = getOption("langserver_library"),
   langServerProcessPatt = getOption("langserver_processPatt"),
   strictLibrary = TRUE,
-  processArgs = list(
-    command = "ps",
-    args = c("-p", Sys.getpid(),  "-o", "cmd", "--no-headers"),
-    stdout = TRUE
-  )
+  processArgs = get_process_args()
 ) {
 
   lg("languageserver_startup Starting")
@@ -29,14 +23,9 @@ languageserver_startup <- function(
     c(rlsLib, .libPaths())
   }
 
-  if (Sys.info()[["sysname"]] != "Linux") {
-    lg("Supported only on Linux. Nothing will be done.")
-    return(FALSE)
-  }
-
   cmd <- do.call(system2, processArgs)
 
-  if (grepl(langServerProcessPatt, cmd, fixed = TRUE)) {
+  if (any(grepl(langServerProcessPatt, cmd, fixed = TRUE))) {
     lg("- This seems to be language server process. Aligning libraries.")
     assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
     lg(paste("- .libpaths() is now:\n ", paste(.libPaths(), collapse = "\n  ")))
