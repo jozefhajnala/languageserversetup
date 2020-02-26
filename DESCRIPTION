@@ -10,7 +10,8 @@ License: AGPL-3
 Imports: remotes
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 6.0.1
+SystemRequirements: procps (linux), tasklist (windows)
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/jozefhajnala/languageserversetup
 BugReports: https://github.com/jozefhajnala/languageserversetup/issues
