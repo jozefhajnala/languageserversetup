@@ -57,11 +57,7 @@ languageserver_install <- function(
   }
 
   if (!isTRUE(continue)) {
-    message(paste0(
-      "Not doing anything, returning FALSE. \n",
-      "Please confirm by typing ", sQuote("Yes"), " to continue next time \n",
-      "or use confirmBeforeInstall = FALSE to skip the confirmation"
-    ))
+    message(confirm_message())
     return(FALSE)
   }
 

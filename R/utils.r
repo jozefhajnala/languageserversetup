@@ -70,3 +70,28 @@ get_process_args <- function() {
     )
   }
 }
+
+locate_rprofile <- function(
+  candidates = c(
+    atHome = file.path("~", ".Rprofile"),
+    atEnv = Sys.getenv("R_PROFILE_USER")
+  )
+) {
+  if (file.exists(candidates["atHome"])) {
+    return(path.expand(candidates["atHome"]))
+  }
+  if (file.exists(candidates["atEnv"])) {
+    return(path.expand(candidates["atEnv"]))
+  }
+  invisible()
+}
+
+make_rprofile_path <- function(filePath) {
+  if (is.null(filePath) || !file.exists(filePath)) {
+    lg("Determined filePath: ", filePath)
+    path.expand(file.path("~", ".Rprofile"))
+  } else {
+    lg("Keeping filePath: ", filePath)
+    path.expand(filePath)
+  }
+}
