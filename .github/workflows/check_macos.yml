@@ -1,0 +1,11 @@
+name: check_macos
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Check macos-elcapitan-release
+      env:
+        DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
+      run: sh inst/test.sh "macos-elcapitan-release"
