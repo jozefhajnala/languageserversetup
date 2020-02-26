@@ -12,6 +12,10 @@
 #'   used to install the `languageserver` package.
 #' @param ref `character(1)`, passed to `remotes::install_github()`
 #'   when relevant.
+#' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
+#'   user to confirm the steps before installation. For non-interactive
+#'   use, `FALSE` will skip the confirmation.
+#'
 #' @importFrom remotes install_github
 #' @importFrom utils install.packages
 #'
@@ -22,32 +26,41 @@ languageserver_install <- function(
   strictLibrary = TRUE,
   fullReinstall = TRUE,
   fromGitHub = TRUE,
+  confirmBeforeInstall = TRUE,
   ref = "master"
 ) {
 
   lg("langserver_install Starting")
   on.exit(lg("langserver_install Exiting"))
 
-  continue <- try(askYesNo(
-    paste(
-      "This will attempt to use remotes::install_github",
-      "to install REditorSupport/languageserver into:",
-      rlsLib,
-      if (isTRUE(strictLibrary))
-        "All dependencies will also be installed there"
-      else
-        "only installing unavailable dependencies",
-      if (isTRUE(fullReinstall))
-        paste("! The directory", rlsLib, "will be RECURSIVELY REMOVED !"),
-      "Do you agree?",
-      sep = "\n"
-    ), default = FALSE
-  ))
+  continue <- if (isTRUE(confirmBeforeInstall)) {
+    try(
+      askYesNo(
+        paste(
+          "This will attempt to use remotes::install_github",
+          "to install REditorSupport/languageserver into:",
+          rlsLib,
+          if (isTRUE(strictLibrary))
+            "All dependencies will also be installed there"
+          else
+            "only installing unavailable dependencies",
+          if (isTRUE(fullReinstall))
+            paste("! The directory", rlsLib, "will be RECURSIVELY REMOVED !"),
+          "Do you agree?",
+          sep = "\n"
+        ),
+        default = FALSE
+      )
+    )
+  } else {
+    TRUE
+  }
 
   if (!isTRUE(continue)) {
-    message(paste(
-      "Not doing anything, returning FALSE.",
-      "Please confirm by typing", sQuote("Yes"), "to continue next time."
+    message(paste0(
+      "Not doing anything, returning FALSE. \n",
+      "Please confirm by typing ", sQuote("Yes"), " to continue next time \n",
+      "or use confirmBeforeInstall = FALSE to skip the confirmation"
     ))
     return(FALSE)
   }
