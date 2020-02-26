@@ -62,7 +62,7 @@ remove_setup_from_rprofile <- function(
 
   if (!isTRUE(continue)) {
     message(confirm_message())
-    return(FALSE)
+    return(invisible(FALSE))
   }
 
   lg("Writing newContent, length: ", length(newContent), " to: ", filePath)

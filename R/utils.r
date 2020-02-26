@@ -88,8 +88,9 @@ locate_rprofile <- function(
 
 make_rprofile_path <- function(filePath) {
   if (is.null(filePath) || !file.exists(filePath)) {
-    lg("Determined filePath: ", filePath)
-    path.expand(file.path("~", ".Rprofile"))
+    detPath <- path.expand(file.path("~", ".Rprofile"))
+    lg("Determined filePath: ", detPath)
+    detPath
   } else {
     lg("Keeping filePath: ", filePath)
     path.expand(filePath)

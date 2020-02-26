@@ -17,22 +17,25 @@ languageserver_startup <- function(
   lg("languageserver_startup Starting")
   on.exit(lg("languageserver_startup Exiting"))
 
+  lg("  Running do.call system2 with: ", toString(processArgs))
+  cmd <- do.call(system2, processArgs)
+  lg("  Determined cmd: ", toString(cmd))
+
+  if (!any(grepl(langServerProcessPatt, cmd, fixed = TRUE))) {
+    lg("  Not language server process. No changes made.")
+    return(invisible(NA))
+  }
+
+  lg("  This seems to be language server process. Aligning libraries.")
   newLibLoc <- if (isTRUE(strictLibrary)) {
     c(rlsLib, .libPaths()[length(.libPaths())])
   } else {
     c(rlsLib, .libPaths())
   }
+  lg("  Determined new library locations: ", toString(newLibLoc))
 
-  cmd <- do.call(system2, processArgs)
-
-  if (any(grepl(langServerProcessPatt, cmd, fixed = TRUE))) {
-    lg("- This seems to be language server process. Aligning libraries.")
-    assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
-    lg(paste("- .libpaths() is now:\n ", paste(.libPaths(), collapse = "\n  ")))
-  } else {
-    lg("- Not language server. No changes made.")
-  }
-
+  assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
+  lg(paste("  Now .libpaths() is:\n  ", paste(.libPaths(), collapse = "\n   ")))
   serverLoadable <- do.call(
     "requireNamespace",
     list(package = "languageserver", quietly = TRUE)
@@ -42,6 +45,8 @@ languageserver_startup <- function(
       "The languageserver package is not loadable. \n",
       "You can try running languageserver_install()"
     )
+  } else {
+    lg("  Package languageserver is loadable, functionality should work.")
   }
 
   invisible(serverLoadable)

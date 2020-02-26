@@ -1,13 +1,15 @@
 .onLoad <- function(libName, pkgName) {
 
   # Test wheter the system command can run
-  cmd <- get_process_args()[["command"]]
-  res <- system2(cmd, stdout = FALSE, stderr = FALSE)
+  pars <- suppressMessages(get_process_args())
+  res <- do.call(system2, c(pars[-3L], stdout = FALSE))
   if (res != 0L) {
     stop(
-      "The command ", sQuote(cmd), " cannot run successfully.\n",
+      "The command ", sQuote(pars[["cmd"]]), " cannot run successfully.\n",
       "Please make sure the software is available to use the package.\n",
-      if (cmd == "ps") paste("Installing", sQuote("procps"), "might help")
+      if (pars[["cmd"]] == "ps") {
+        paste("Installing", sQuote("procps"), "might help")
+      }
     )
   }
 
