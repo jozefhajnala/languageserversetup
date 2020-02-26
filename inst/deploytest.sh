@@ -1,13 +1,8 @@
 #!/bin/sh
 
-# Example non-Linux platforms:
-#  "macos-elcapitan-release"
-#  "windows-x86_64-devel"
-
 set -e
 
-platform=$1
-container_name=nhlapi_test
+container_name=languageserversetup_test
 image_name=index.docker.io/jozefhajnala/rhub:latest
 script_dir=$(dirname $(readlink -f "$0"))
 dir_root=$script_dir/../
@@ -24,7 +19,7 @@ docker cp $dir_root $container_name:/root
 docker exec \
   --workdir /root/languageserversetup \
   $container_name \
-  Rscript inst/rhubcheck.R $platform
+  Rscript inst/deploytest.R
 
 docker stop $container_name
 docker rm $container_name

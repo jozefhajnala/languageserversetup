@@ -8,4 +8,4 @@ jobs:
     - name: Check windows-x86_64-devel
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
-      run: sh inst/test.sh "windows-x86_64-devel"
+      run: sh inst/check.sh "windows-x86_64-devel"

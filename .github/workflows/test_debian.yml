@@ -1,11 +1,11 @@
-name: check_macos
+name: deploy_debian
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Check macos-elcapitan-release
+    - name: Test deployment
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
-      run: sh inst/check.sh "macos-elcapitan-release"
+      run: sh inst/deploytest.sh
