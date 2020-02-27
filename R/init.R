@@ -16,24 +16,10 @@
   options(
     langserver_library = path.expand(file.path("~", "languageserver-library")),
     langserver_processPatt = "languageserver::run",
-    langserver_quiet = FALSE
+    langserver_quiet = FALSE,
+    langserver_rprofile_candidates = c(
+      atHome = path.expand(file.path("~", ".Rprofile")),
+      atEnv = Sys.getenv("R_PROFILE_USER")
+    )
   )
-}
-
-confirm_message <- function(msg = paste0(
-  "Not doing anything, returning FALSE. \n",
-  "Please confirm by typing ", sQuote("Yes"), " to continue next time \n",
-  "or use confirmBeforeWrite = FALSE to skip the confirmation"
-)) {
-  invisible(msg)
-}
-
-append_code <- function(code = c(
-  "# LanguageServer Setup Start (do not change this chunk)",
-  "# to remove this, run languageserversetup::remove_from_rprofile",
-  "library(languageserversetup)",
-  "languageserver_startup()",
-  "# LanguageServer Setup End"
-)) {
-  invisible(code)
 }

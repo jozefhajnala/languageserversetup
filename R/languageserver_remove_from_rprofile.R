@@ -1,31 +1,13 @@
-add_setup_to_rprofile <- function(
-  rprofilePath = locate_rprofile(),
-  confirmBeforeWrite = TRUE,
-  code = append_code()
-) {
-
-  filePath <- make_rprofile_path(rprofilePath)
-  continue <- if (isTRUE(confirmBeforeWrite)) {
-    try(askYesNo(
-      paste0("This will append code to: ", filePath, "\n", "Do you agree?"),
-      default = FALSE
-    ))
-  } else {
-    TRUE
-  }
-
-  if (!isTRUE(continue)) {
-    message(confirm_message())
-    return(FALSE)
-  }
-
-  write(code, file = filePath, append = TRUE)
-}
-
-remove_setup_from_rprofile <- function(
+#' Remove languageserver initialization from Rprofile
+#'
+#' @inheritParams languageserver_add_to_rprofile
+#'
+#' @return side-effects
+#' @export
+languageserver_remove_from_rprofile <- function(
   rprofilePath = locate_rprofile(),
   code = append_code(),
-  confirmBeforeRemove = TRUE
+  confirmBeforeChanging = TRUE
 ) {
   filePath <- make_rprofile_path(rprofilePath)
   oldContent <- readLines(filePath)
@@ -47,7 +29,7 @@ remove_setup_from_rprofile <- function(
     return(invisible(FALSE))
   }
 
-  continue <- if (isTRUE(confirmBeforeRemove)) {
+  continue <- if (isTRUE(confirmBeforeChanging)) {
     try(askYesNo(
       paste0(
         "This will remove lines: ", toString(which(toRemove)), "\n",

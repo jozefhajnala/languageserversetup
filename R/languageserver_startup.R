@@ -1,9 +1,12 @@
 #' Prepare languageserver to be started
+#'
 #' @inheritParams languageserver_install
+#'
 #' @param langServerProcessPatt `character(1)`, pattern to
 #'   recognize the process created by language server.
 #' @param processArgs `list()` of arguments to `system2` to
-#'   retrieve a list of processes.
+#'   retrieve a list of processes. The command defaults to `wmic`
+#'   for windows and `ps` for other sysnames.
 #'
 #' @return side-effects
 #' @export
@@ -26,16 +29,16 @@ languageserver_startup <- function(
     return(invisible(NA))
   }
 
-  lg("  This seems to be language server process. Aligning libraries.")
+  lgsrvr("  This seems to be language server process. Aligning libraries.")
   newLibLoc <- if (isTRUE(strictLibrary)) {
     c(rlsLib, .libPaths()[length(.libPaths())])
   } else {
     c(rlsLib, .libPaths())
   }
-  lg("  Determined new library locations: ", toString(newLibLoc))
+  lgsrvr("  Determined new library locations: ", toString(newLibLoc))
 
   assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
-  lg(paste("  Now .libpaths() is:\n  ", paste(.libPaths(), collapse = "\n   ")))
+  lgsrvr("  Now .libpaths() is:\n   ", paste(.libPaths(), collapse = "\n   "))
   serverLoadable <- do.call(
     "requireNamespace",
     list(package = "languageserver", quietly = TRUE)
@@ -46,7 +49,7 @@ languageserver_startup <- function(
       "You can try running languageserver_install()"
     )
   } else {
-    lg("  Package languageserver is loadable, functionality should work.")
+    lgsrvr("  Package languageserver is loadable, functionality should work.")
   }
 
   invisible(serverLoadable)

@@ -15,8 +15,8 @@ message("\n\nTesting languageserver_startup")
 languageserver_startup(langServerProcessPatt = "")
 
 message("\n\nTesting addition of code to .Rprofile")
-languageserversetup:::add_setup_to_rprofile(
-  confirmBeforeWrite = FALSE
+languageserver_add_to_rprofile(
+  confirmBeforeChanging = FALSE
 )
 stopifnot(identical(
   readLines("/root/.Rprofile"),
@@ -24,8 +24,8 @@ stopifnot(identical(
 ))
 
 message("\n\nTesting removal of code from .Rprofile")
-languageserversetup:::remove_setup_from_rprofile(
-  confirmBeforeRemove = FALSE
+languageserver_remove_from_rprofile(
+  confirmBeforeChanging = FALSE
 )
 stopifnot(identical(
   readLines("/root/.Rprofile"),

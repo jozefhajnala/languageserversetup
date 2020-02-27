@@ -1,4 +1,4 @@
-lg <- function(...) {
+lgsrvr <- lg <- function(...) {
   if (!isTRUE(getOption("langserver_quiet"))) {
     message(...)
   }
@@ -54,6 +54,7 @@ askYesNo <- if (
 
 get_process_args <- function() {
   if (tolower(Sys.info()[["sysname"]]) == "windows") {
+    lg("sysname is windows, setting: ", sQuote("wmic"), " as command.")
     list(
       command = "wmic",
       args = paste0(
@@ -63,6 +64,7 @@ get_process_args <- function() {
       stdout = TRUE
     )
   } else {
+    lg("sysname is not windows, setting: ", sQuote("ps"), " as command.")
     list(
       command = "ps",
       args = c("-p", Sys.getpid(),  "-o", "cmd", "--no-headers"),
@@ -72,17 +74,18 @@ get_process_args <- function() {
 }
 
 locate_rprofile <- function(
-  candidates = c(
-    atHome = file.path("~", ".Rprofile"),
-    atEnv = Sys.getenv("R_PROFILE_USER")
-  )
+  candidates = getOption("langserver_rprofile_candidates")
 ) {
+  lg("locate_rprofile using candidates: ", toString(candidates))
   if (file.exists(candidates["atHome"])) {
+    lg("locate_rprofile returning: ", candidates["atHome"])
     return(path.expand(candidates["atHome"]))
   }
   if (file.exists(candidates["atEnv"])) {
+    lg("locate_rprofile returning: ", path.expand(candidates["atEnv"]))
     return(path.expand(candidates["atEnv"]))
   }
+  lg("locate_rprofile did not find existing candidates, returning: NULL")
   invisible()
 }
 
@@ -95,4 +98,22 @@ make_rprofile_path <- function(filePath) {
     lg("Keeping filePath: ", filePath)
     path.expand(filePath)
   }
+}
+
+confirm_message <- function(msg = paste0(
+  "Not doing anything, returning FALSE. \n",
+  "Please confirm by typing ", sQuote("Yes"), " to continue next time \n",
+  "or use confirmBeforeWrite = FALSE to skip the confirmation"
+)) {
+  invisible(msg)
+}
+
+append_code <- function(code = c(
+  "# LanguageServer Setup Start (do not change this chunk)",
+  "# to remove this, run languageserversetup::remove_from_rprofile",
+  "library(languageserversetup)",
+  "languageserver_startup()",
+  "# LanguageServer Setup End"
+)) {
+  invisible(code)
 }
