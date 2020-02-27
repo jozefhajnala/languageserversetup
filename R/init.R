@@ -5,9 +5,9 @@
   res <- do.call(system2, c(pars[-3L], stdout = FALSE))
   if (res != 0L) {
     stop(
-      "The command ", sQuote(pars[["cmd"]]), " cannot run successfully.\n",
+      "The command ", sQuote(pars[["command"]]), " cannot run successfully.\n",
       "Please make sure the software is available to use the package.\n",
-      if (pars[["cmd"]] == "ps") {
+      if (pars[["command"]] == "ps") {
         paste("Installing", sQuote("procps"), "might help")
       }
     )

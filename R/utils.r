@@ -55,21 +55,29 @@ askYesNo <- if (
 get_process_args <- function() {
   if (tolower(Sys.info()[["sysname"]]) == "windows") {
     lg("sysname is windows, setting: ", sQuote("wmic"), " as command.")
-    list(
+    return(list(
       command = "wmic",
       args = paste0(
-        "process where processid=", Sys.getpid(),
-        " get commandline"
+        "process where processid=", Sys.getpid(), " get commandline"
       ),
       stdout = TRUE
-    )
-  } else {
-    lg("sysname is not windows, setting: ", sQuote("ps"), " as command.")
-    list(
+    ))
+  }
+  if (tolower(Sys.info()[["sysname"]]) == "darwin") {
+    lg("sysname is darwin, setting: ", sQuote("ps"), " as command.")
+    return(list(
       command = "ps",
-      args = c("-p", Sys.getpid(),  "-o", "cmd", "--no-headers"),
+      args = c("-p", Sys.getpid(),  "-o", "command"),
       stdout = TRUE
-    )
+    ))
+  }
+  if (tolower(Sys.info()[["sysname"]]) == "linux") {
+    lg("sysname is linux, setting: ", sQuote("ps"), " as command.")
+    return(list(
+      command = "ps",
+      args = c("-p", Sys.getpid(),  "-o", "command", "--no-headers"),
+      stdout = TRUE
+    ))
   }
 }
 
