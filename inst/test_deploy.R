@@ -1,3 +1,6 @@
+args <- commandArgs(trailingOnly = TRUE)
+fromGitHub <- identical(args, "dev")
+
 message("Running deploy test")
 
 message("\n\nInstalling dependencies")
@@ -9,7 +12,7 @@ message("\n\nAttaching languageserversetup")
 library(languageserversetup)
 
 message("\n\nInstalling languageserver")
-languageserver_install(confirmBeforeInstall = FALSE)
+languageserver_install(confirmBeforeInstall = FALSE, fromGitHub = fromGitHub)
 
 message("\n\nTesting languageserver_startup")
 languageserver_startup(langServerProcessPatt = "")
