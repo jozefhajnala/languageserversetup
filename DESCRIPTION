@@ -7,7 +7,6 @@ Maintainer: Jozef Hajnala <jozef.hajnala@gmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: AGPL-3
-Imports: remotes
 Suggests: tinytest
 Encoding: UTF-8
 LazyData: true

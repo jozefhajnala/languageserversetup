@@ -18,7 +18,6 @@
 #' @param dryRun `logical(1)`, if `TRUE`, most actions will only be repored,
 #'   not taken - nothing will be removed, created or installed.
 #'
-#' @importFrom remotes install_github
 #' @importFrom utils install.packages
 #'
 #' @return side-effects
@@ -103,14 +102,9 @@ languageserver_install <- function(
       lg("this is a dryRun, would run remotes::install_github")
       return("remotes::install_github")
     }
-    lg("running remotes::install_github")
-    remotes::install_github( # nocov start
-      repo = "REditorSupport/languageserver",
-      ref = ref,
-      dependencies = c("Depends", "Imports"),
-      upgrade = "never",
-      lib = rlsLib,
-      force = TRUE
+    lg("running dev installation")
+    source( # nocov start
+      "https://install-github.me/REditorSupport/languageserver"
     ) # nocov end
   } else {
     if (isTRUE(dryRun)) {
