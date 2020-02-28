@@ -30,14 +30,14 @@ languageserver_remove_from_rprofile <- function(
   }
 
   continue <- if (isTRUE(confirmBeforeChanging)) {
-    try(askYesNo(
+    try(askYesNo( # nocov start
       paste0(
         "This will remove lines: ", toString(which(toRemove)), "\n",
         "from: ", filePath, "\n",
         "Do you agree?"
       ),
       default = FALSE
-    ))
+    )) # nocov end
   } else {
     TRUE
   }

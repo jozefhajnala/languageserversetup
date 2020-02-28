@@ -1,11 +1,13 @@
-lgsrvr <- lg <- function(...) {
-  if (!isTRUE(getOption("langserver_quiet"))) {
-    message(...)
-  }
+lg <- function(..., stayQuiet = getOption("langserver_quiet")) {
+  if (!isTRUE(stayQuiet)) message(...)
   invisible()
 }
 
-askYesNo <- if (
+lgsrvr <- function(...) {
+  lg(..., stayQuiet = getOption("langserver_quiet_serverproc"))
+}
+
+askYesNo <- if ( # nocov start
   is.element("package:utils", utils::find("askYesNo", mode = "function"))
 ) {
   utils::askYesNo
@@ -50,10 +52,10 @@ askYesNo <- if (
     else
       c(TRUE, FALSE, NA)[match]
   }
-}
+} # nocov end
 
-get_process_args <- function() {
-  if (tolower(Sys.info()[["sysname"]]) == "windows") {
+get_process_args <- function(os = tolower(Sys.info()[["sysname"]])) {
+  if (os == "windows") {
     lg("sysname is windows, setting: ", sQuote("wmic"), " as command.")
     return(list(
       command = "wmic",
@@ -63,7 +65,7 @@ get_process_args <- function() {
       stdout = TRUE
     ))
   }
-  if (tolower(Sys.info()[["sysname"]]) == "darwin") {
+  if (os == "darwin") {
     lg("sysname is darwin, setting: ", sQuote("ps"), " as command.")
     return(list(
       command = "ps",
@@ -71,7 +73,7 @@ get_process_args <- function() {
       stdout = TRUE
     ))
   }
-  if (tolower(Sys.info()[["sysname"]]) == "linux") {
+  if (os == "linux") {
     lg("sysname is linux, setting: ", sQuote("ps"), " as command.")
     return(list(
       command = "ps",

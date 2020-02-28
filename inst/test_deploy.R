@@ -6,6 +6,7 @@ message("Running deploy test")
 message("\n\nInstalling dependencies")
 system("apt-get update && apt-get -y install libxml2-dev procps")
 install.packages("remotes")
+install.packages("tinytest")
 install.packages(".", repos = NULL, type = "source")
 
 message("\n\nAttaching languageserversetup")

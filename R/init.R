@@ -1,4 +1,4 @@
-.onLoad <- function(libName, pkgName) {
+.onLoad <- function(libName, pkgName) { #nocov start
 
   # Test wheter the system command can run
   pars <- suppressMessages(get_process_args())
@@ -17,9 +17,10 @@
     langserver_library = path.expand(file.path("~", "languageserver-library")),
     langserver_processPatt = "languageserver::run",
     langserver_quiet = FALSE,
+    langserver_quiet_serverproc = FALSE,
     langserver_rprofile_candidates = c(
       atHome = path.expand(file.path("~", ".Rprofile")),
       atEnv = Sys.getenv("R_PROFILE_USER")
     )
   )
-}
+} #nocov end

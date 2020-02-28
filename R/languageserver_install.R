@@ -15,6 +15,8 @@
 #' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
 #'   user to confirm the steps before installation. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
+#' @param dryRun `logical(1)`, if `TRUE`, most actions will only be repored,
+#'   not taken - nothing will be removed, created or installed.
 #'
 #' @importFrom remotes install_github
 #' @importFrom utils install.packages
@@ -27,31 +29,33 @@ languageserver_install <- function(
   fullReinstall = TRUE,
   fromGitHub = TRUE,
   confirmBeforeInstall = TRUE,
-  ref = "master"
+  ref = "master",
+  dryRun = FALSE
 ) {
-
+  oldLibPaths <- .libPaths()
   lg("langserver_install Starting")
-  on.exit(lg("langserver_install Exiting"))
+  on.exit({
+    assign(".lib.loc", oldLibPaths, envir = environment(.libPaths))
+    lg("langserver_install Exiting")
+  })
 
   continue <- if (isTRUE(confirmBeforeInstall)) {
-    try(
-      askYesNo(
-        paste(
-          "This will attempt to use remotes::install_github",
-          "to install REditorSupport/languageserver into:",
-          rlsLib,
-          if (isTRUE(strictLibrary))
-            "All dependencies will also be installed there"
-          else
-            "only installing unavailable dependencies",
-          if (isTRUE(fullReinstall))
-            paste("! The directory", rlsLib, "will be RECURSIVELY REMOVED !"),
-          "Do you agree?",
-          sep = "\n"
-        ),
-        default = FALSE
-      )
-    )
+    try(askYesNo( # nocov start
+      paste(
+        "This will attempt to use remotes::install_github",
+        "to install REditorSupport/languageserver into:",
+        rlsLib,
+        if (isTRUE(strictLibrary))
+          "All dependencies will also be installed there"
+        else
+          "only installing unavailable dependencies",
+        if (isTRUE(fullReinstall))
+          paste("! The directory", rlsLib, "will be RECURSIVELY REMOVED !"),
+        "Do you agree?",
+        sep = "\n"
+      ),
+      default = FALSE
+    )) # nocov end
   } else {
     TRUE
   }
@@ -66,32 +70,57 @@ languageserver_install <- function(
   } else {
     c(rlsLib, .libPaths())
   }
+  lg("determined new .lib.loc: ", toString(newLibLoc))
+
   if (isTRUE(fullReinstall)) {
-    lg("fullReinstall is TRUE, deleting ", rlsLib)
-    unlink(rlsLib, recursive = TRUE, force = TRUE)
+    if (isTRUE(dryRun)) {
+      lg(
+        "this is a dryRun, would run: ",
+        "unlink(rlsLib, recursive = TRUE, force = TRUE)"
+      )
+    } else {
+      lg("fullReinstall is TRUE, deleting ", rlsLib)
+      unlink(rlsLib, recursive = TRUE, force = TRUE)
+    }
   }
   if (!dir.exists(rlsLib)) {
-    lg("rlsLib does not exist, creating ", rlsLib)
-    dir.create(rlsLib, recursive = TRUE)
+    if (isTRUE(dryRun)) {
+      lg(
+        "this is a dryRun, would run: ",
+        "dir.create(rlsLib, recursive = TRUE)"
+      )
+    } else {
+      lg("rlsLib does not exist, creating ", rlsLib)
+      dir.create(rlsLib, recursive = TRUE)
+    }
   }
+
   lg("assigning ", newLibLoc, " to .lib.loc")
   assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
 
   if (isTRUE(fromGitHub)) {
+    if (isTRUE(dryRun)) {
+      lg("this is a dryRun, would run remotes::install_github")
+      return("remotes::install_github")
+    }
     lg("running remotes::install_github")
-    remotes::install_github(
+    remotes::install_github( # nocov start
       repo = "REditorSupport/languageserver",
       ref = ref,
       dependencies = c("Depends", "Imports"),
       upgrade = "never",
       lib = rlsLib,
       force = TRUE
-    )
+    ) # nocov end
   } else {
+    if (isTRUE(dryRun)) {
+      lg("this is a dryRun, would run utils::install.packages")
+      return("utils::install.packages")
+    }
     lg("running install.packages")
-    utils::install.packages(
+    utils::install.packages( # nocov start
       pkgs = "languageserver",
       lib = rlsLib
-    )
+    ) # nocov end
   }
 }
