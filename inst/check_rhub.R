@@ -5,15 +5,27 @@ if (length(args) != 1L) {
 }
 
 platform <- args[[1L]]
-if (!is.element(platform, rhub::platforms()[[1L]])) {
-  stop(paste(platform, "not in rhub::platforms()[[1L]]"))
+if (!is.element(platform, c("cran", rhub::platforms()[[1L]]))) {
+  stop(paste(platform, "not in rhub::platforms()[[1L]] nor cran"))
 }
 
-cr <- rhub::check(
-  platform = platform,
-  show_status = TRUE,
-  env_vars = Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY", names = TRUE)
-)
+if (platform == "cran") {
+  system("apt-get update && apt-get -y install libxml2-dev")
+  install.packages("xml2")
+  cr <- rhub::check_for_cran(
+    show_status = TRUE,
+    env_vars = c(
+      `_R_CHECK_CRAN_INCOMING_REMOTE_` = "false",
+      Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY", names = TRUE)
+    )
+  )
+} else {
+  cr <- rhub::check(
+    platform = platform,
+    show_status = TRUE,
+    env_vars = Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY", names = TRUE)
+  )
+}
 statuses <- cr[[".__enclos_env__"]][["private"]][["status_"]]
 
 res <- do.call(rbind, lapply(statuses, function(thisStatus) {
