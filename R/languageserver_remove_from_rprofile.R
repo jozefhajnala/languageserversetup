@@ -5,8 +5,9 @@
 #' @return side-effects
 #' @export
 languageserver_remove_from_rprofile <- function(
+  rlsLib = getOption("langserver_library"),
   rprofilePath = locate_rprofile(),
-  code = append_code(),
+  code = append_code(rlsLib = rlsLib),
   confirmBeforeChanging = TRUE
 ) {
   filePath <- make_rprofile_path(rprofilePath)

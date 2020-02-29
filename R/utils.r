@@ -118,9 +118,12 @@ confirm_message <- function(msg = paste0(
   invisible(msg)
 }
 
-append_code <- function(code = c(
+append_code <- function(
+  rlsLib = getOption("langserver_library"),
+  code = c(
   "# LanguageServer Setup Start (do not change this chunk)",
   "# to remove this, run languageserversetup::remove_from_rprofile",
+  paste0("options(", "langserver_library", " = '", rlsLib, "')"),
   "library(languageserversetup)",
   "languageserver_startup()",
   "# LanguageServer Setup End"

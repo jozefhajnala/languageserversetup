@@ -4,10 +4,13 @@
 \alias{languageserver_add_to_rprofile}
 \title{Add languageserver initialization to Rprofile}
 \usage{
-languageserver_add_to_rprofile(rprofilePath = locate_rprofile(),
-  confirmBeforeChanging = TRUE, code = append_code())
+languageserver_add_to_rprofile(rlsLib = getOption("langserver_library"),
+  rprofilePath = locate_rprofile(), confirmBeforeChanging = TRUE,
+  code = append_code(rlsLib = rlsLib))
 }
 \arguments{
+\item{rlsLib}{\code{character(1)} path to the library.}
+
 \item{rprofilePath}{\code{character(1)}, path to the file where
 to add the initialization code, or \code{NULL}. By default, adds the
 code to a \code{.Rprofile} file in the home directory of the current

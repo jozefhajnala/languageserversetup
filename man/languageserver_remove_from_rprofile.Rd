@@ -4,10 +4,13 @@
 \alias{languageserver_remove_from_rprofile}
 \title{Remove languageserver initialization from Rprofile}
 \usage{
-languageserver_remove_from_rprofile(rprofilePath = locate_rprofile(),
-  code = append_code(), confirmBeforeChanging = TRUE)
+languageserver_remove_from_rprofile(rlsLib = getOption("langserver_library"),
+  rprofilePath = locate_rprofile(), code = append_code(rlsLib = rlsLib),
+  confirmBeforeChanging = TRUE)
 }
 \arguments{
+\item{rlsLib}{\code{character(1)} path to the library.}
+
 \item{rprofilePath}{\code{character(1)}, path to the file where
 to add the initialization code, or \code{NULL}. By default, adds the
 code to a \code{.Rprofile} file in the home directory of the current

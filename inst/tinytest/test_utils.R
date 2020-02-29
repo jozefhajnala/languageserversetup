@@ -25,12 +25,20 @@ expect_equal(
 
 tmpFile <- tempfile()
 file.create(tmpFile)
-languageserver_add_to_rprofile(tmpFile, confirmBeforeChanging = FALSE)
+languageserver_add_to_rprofile(
+  rlsLib = "test",
+  tmpFile,
+  confirmBeforeChanging = FALSE
+)
 expect_equal(
   readLines(tmpFile),
-  languageserversetup:::append_code()
+  languageserversetup:::append_code(rlsLib = "test")
 )
-languageserver_remove_from_rprofile(tmpFile, confirmBeforeChanging = FALSE)
+languageserver_remove_from_rprofile(
+  rlsLib = "test",
+  tmpFile,
+  confirmBeforeChanging = FALSE
+)
 expect_equal(
   readLines(tmpFile),
   character(0)
@@ -38,24 +46,12 @@ expect_equal(
 unlink(tmpFile)
 
 expect_equal(
-  languageserversetup:::append_code(),
+  languageserversetup:::append_code("test"),
   c(
     "# LanguageServer Setup Start (do not change this chunk)",
     "# to remove this, run languageserversetup::remove_from_rprofile",
-    "library(languageserversetup)",
-    "languageserver_startup()",
-    "# LanguageServer Setup End"
-  )
-)
-
-expect_equal(
-  languageserversetup:::append_code(),
-  c(
-    "# LanguageServer Setup Start (do not change this chunk)",
-    "# to remove this, run languageserversetup::remove_from_rprofile",
-    "library(languageserversetup)",
-    "languageserver_startup()",
-    "# LanguageServer Setup End"
+    "options(langserver_library = 'test')", "library(languageserversetup)",
+    "languageserver_startup()", "# LanguageServer Setup End"
   )
 )
 

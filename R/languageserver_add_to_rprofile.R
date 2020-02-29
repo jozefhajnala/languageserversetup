@@ -1,5 +1,6 @@
 #' Add languageserver initialization to Rprofile
 #'
+#' @inheritParams languageserver_install
 #' @param rprofilePath `character(1)`, path to the file where
 #'   to add the initialization code, or `NULL`. By default, adds the
 #'   code to a `.Rprofile` file in the home directory of the current
@@ -13,9 +14,10 @@
 #' @return side-effects
 #' @export
 languageserver_add_to_rprofile <- function(
+  rlsLib = getOption("langserver_library"),
   rprofilePath = locate_rprofile(),
   confirmBeforeChanging = TRUE,
-  code = append_code()
+  code = append_code(rlsLib = rlsLib)
 ) {
 
   filePath <- make_rprofile_path(rprofilePath)
