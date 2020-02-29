@@ -9,7 +9,11 @@ if (!is.element(platform, rhub::platforms()[[1L]])) {
   stop(paste(platform, "not in rhub::platforms()[[1L]]"))
 }
 
-cr <- rhub::check(platform = platform, show_status = TRUE)
+cr <- rhub::check(
+  platform = platform,
+  show_status = TRUE,
+  env_vars = Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY", names = TRUE)
+)
 statuses <- cr[[".__enclos_env__"]][["private"]][["status_"]]
 
 res <- do.call(rbind, lapply(statuses, function(thisStatus) {

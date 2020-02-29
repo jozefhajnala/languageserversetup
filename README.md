@@ -2,8 +2,8 @@
 
 > Setup and initualize R languageserver seamlessly and automatically with editors such as VS Code.
 
-![MSWin](https://github.com/jozefhajnala/languageserversetup/workflows/check_win/badge.svg)
-![MacOS](https://github.com/jozefhajnala/languageserversetup/workflows/check_macos/badge.svg)
+![MSWin](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_win/badge.svg)
+![MacOS](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_macos/badge.svg)
 ![Deploy-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_cran/badge.svg)
 ![Deploy-Dev](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_dev/badge.svg)
 

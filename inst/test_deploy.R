@@ -12,7 +12,7 @@ install.packages(".", repos = NULL, type = "source")
 message("\n\nAttaching languageserversetup")
 library(languageserversetup)
 
-rlsLib = file.path(tempdir(), "languageserver-library")
+rlsLib <- file.path(tempdir(), "languageserver-library")
 
 message("\n\nInstalling languageserver")
 languageserver_install(

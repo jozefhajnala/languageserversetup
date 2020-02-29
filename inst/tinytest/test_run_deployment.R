@@ -1,38 +1,48 @@
-message("Running deploy test")
+runDeploy <- identical(Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY"), "true")
 
-oldLibPaths <- .libPaths()
-args <- commandArgs(trailingOnly = TRUE)
-fromGitHub <- identical(args, "dev")
-options(repos = c(CRAN = "https://cran.rstudio.com/"))
+if (!isTRUE(runDeploy)) {
+  message("Skipping deploy test")
+}
 
-message("\n\nInstalling dependencies")
-system("apt-get update && apt-get -y install libxml2-dev procps")
-install.packages("remotes")
-install.packages("tinytest")
-install.packages(".", repos = NULL, type = "source")
+if (isTRUE(runDeploy)) {
 
-message("\n\nAttaching languageserversetup")
-expect_equal(
-  require(languageserversetup),
-  TRUE
-)
+  message("Running deploy test")
 
-message("\n\nInstalling languageserver")
-rlsLib = file.path(tempdir(), "languageserver-library")
-languageserver_install(
-  rlsLib = rlsLib,
-  confirmBeforeInstall = FALSE,
-  fromGitHub = fromGitHub
-)
+  oldLibPaths <- .libPaths()
+  args <- commandArgs(trailingOnly = TRUE)
+  fromGitHub <- identical(args, "dev")
+  options(repos = c(CRAN = "https://cran.rstudio.com/"))
 
-message("\n\nTesting languageserver_startup")
-expect_equal(
-  languageserver_startup(
+  message("\n\nInstalling dependencies")
+  system("apt-get update && apt-get -y install libxml2-dev procps")
+  install.packages("remotes")
+  install.packages("tinytest")
+  install.packages(".", repos = NULL, type = "source")
+
+  message("\n\nAttaching languageserversetup")
+  expect_equal(
+    require(languageserversetup),
+    TRUE
+  )
+
+  message("\n\nInstalling languageserver")
+  rlsLib <- file.path(tempdir(), "languageserver-library")
+  languageserver_install(
     rlsLib = rlsLib,
-    langServerProcessPatt = ""
-  ),
-  TRUE
-)
+    confirmBeforeInstall = FALSE,
+    fromGitHub = fromGitHub
+  )
 
-assign(".lib.loc", oldLibPaths, envir = environment(.libPaths))
-message("\n\nDone.\n\n")
+  message("\n\nTesting languageserver_startup")
+  expect_equal(
+    languageserver_startup(
+      rlsLib = rlsLib,
+      langServerProcessPatt = ""
+    ),
+    TRUE
+  )
+
+  assign(".lib.loc", oldLibPaths, envir = environment(.libPaths))
+  message("\n\nDone.\n\n")
+
+}

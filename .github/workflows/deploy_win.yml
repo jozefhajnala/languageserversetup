@@ -1,4 +1,4 @@
-name: check_win
+name: deploy_win
 on: [push]
 jobs:
   build:
@@ -8,4 +8,5 @@ jobs:
     - name: Check windows-x86_64-devel
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
+        LANGSERVERSETUP_RUN_DEPLOY: true
       run: sh inst/docker_stage.sh inst/check_rhub.R "windows-x86_64-devel"
