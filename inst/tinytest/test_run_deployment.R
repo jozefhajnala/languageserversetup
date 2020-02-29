@@ -1,3 +1,7 @@
+if (!languageserversetup:::system_dep_available()) {
+  q("no", status = 0)
+}
+
 runDeploy <- identical(Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY"), "true")
 
 if (!isTRUE(runDeploy)) {

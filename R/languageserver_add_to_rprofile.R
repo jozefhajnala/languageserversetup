@@ -20,6 +20,9 @@ languageserver_add_to_rprofile <- function(
   code = append_code(rlsLib = rlsLib)
 ) {
 
+  sysDepAvailable <- system_dep_available()
+  if (!sysDepAvailable) stop(attr(sysDepAvailable, "msg"))
+
   filePath <- make_rprofile_path(rprofilePath)
   continue <- if (isTRUE(confirmBeforeChanging)) {
     try(askYesNo( # nocov start

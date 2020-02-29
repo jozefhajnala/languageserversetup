@@ -1,4 +1,8 @@
-# remotes::install_github used by default ----
+if (!languageserversetup:::system_dep_available()) {
+  q("no", status = 0)
+}
+
+# development version used by default ----
 expect_equal(
   languageserver_install(confirmBeforeInstall = FALSE, dryRun = TRUE),
   "remotes::install_github"

@@ -28,6 +28,10 @@ languageserver_install <- function(
   confirmBeforeInstall = TRUE,
   dryRun = FALSE
 ) {
+
+  sysDepAvailable <- system_dep_available()
+  if (!sysDepAvailable) stop(attr(sysDepAvailable, "msg"))
+
   oldLibPaths <- .libPaths()
   lg("langserver_install Starting")
   on.exit({

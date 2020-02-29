@@ -1,3 +1,7 @@
+if (!languageserversetup:::system_dep_available()) {
+  q("no", status = 0)
+}
+
 expect_equal(
   languageserver_startup(),
   NA

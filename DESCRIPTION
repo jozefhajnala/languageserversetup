@@ -1,10 +1,10 @@
 Package: languageserversetup
 Type: Package
-Title: Automated Setup And Autorun For R Language Server
+Title: Automated Setup and Auto Run for R Language Server
 Version: 0.0.9
-Author: person("Jozef", "Hajnala", email = "jozef.hajnala@gmail.com", role = c("aut", "cre"))
+Authors@R: person("Jozef", "Hajnala", email = "jozef.hajnala@gmail.com", role = c("aut", "cre"))
 Maintainer: Jozef Hajnala <jozef.hajnala@gmail.com>
-Description: Allows to install the R languageserver with all dependencies
+Description: Allows to install the R 'languageserver' with all dependencies
     into a separate library and use that independent installation
     automatically when R is instantiated as a language server process.
     Useful for making language server seamless to use without

@@ -1,18 +1,6 @@
-.onLoad <- function(libName, pkgName) { #nocov start
+.LangServerSetupEnv <- new.env(parent = emptyenv())
 
-  # Test wheter the system command can run
-  pars <- suppressMessages(get_process_args())
-  res <- do.call(system2, c(pars[-3L], stdout = FALSE))
-  if (res != 0L) {
-    stop(
-      "The command ", sQuote(pars[["command"]]), " cannot run successfully.\n",
-      "Please make sure the software is available to use the package.\n",
-      if (pars[["command"]] == "ps") {
-        paste("Installing", sQuote("procps"), "might help")
-      }
-    )
-  }
-
+.onLoad <- function(libName, pkgName) { # nocov start
   options(
     langserver_library = path.expand(file.path("~", "languageserver-library")),
     langserver_processPatt = "languageserver::run",
@@ -23,4 +11,4 @@
       atEnv = Sys.getenv("R_PROFILE_USER")
     )
   )
-} #nocov end
+} # nocov end
