@@ -12,11 +12,20 @@ install.packages(".", repos = NULL, type = "source")
 message("\n\nAttaching languageserversetup")
 library(languageserversetup)
 
+rlsLib = file.path(tempdir(), "languageserver-library")
+
 message("\n\nInstalling languageserver")
-languageserver_install(confirmBeforeInstall = FALSE, fromGitHub = fromGitHub)
+languageserver_install(
+  rlsLib = rlsLib,
+  confirmBeforeInstall = FALSE,
+  fromGitHub = fromGitHub
+)
 
 message("\n\nTesting languageserver_startup")
-languageserver_startup(langServerProcessPatt = "")
+languageserver_startup(
+  rlsLib = rlsLib,
+  langServerProcessPatt = ""
+)
 
 message("\n\nTesting addition of code to .Rprofile")
 languageserver_add_to_rprofile(

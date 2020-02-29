@@ -3,10 +3,18 @@ expect_equal(
   NA
 )
 
+# Test a failed load ----
+oldLibPaths <- .libPaths()
 expect_error(
   languageserver_startup(
-    rlsLib = tempdir(),
+    rlsLib = file.path(tempdir(), "nothing-here"),
     strictLibrary = TRUE,
     langServerProcessPatt = ""
   )
+)
+
+# After failed load, libPaths should be restored ----
+expect_equal(
+  .libPaths(),
+  oldLibPaths
 )

@@ -20,6 +20,8 @@ languageserver_startup <- function(
   lg("languageserver_startup Starting")
   on.exit(lg("languageserver_startup Exiting"))
 
+  oldLibPaths <- .libPaths()
+  lg("  Current .libPaths: ", toString(oldLibPaths))
   lg("  Running do.call system2 with: ", toString(processArgs))
   cmd <- do.call(system2, processArgs)
   lg("  Determined cmd: ", toString(cmd))
@@ -39,11 +41,14 @@ languageserver_startup <- function(
 
   assign(".lib.loc", newLibLoc, envir = environment(.libPaths))
   lgsrvr("  Now .libpaths() is:\n   ", paste(.libPaths(), collapse = "\n   "))
+  lgsrvr("  Trying to requireNamespace of languageserver.")
   serverLoadable <- do.call(
     "requireNamespace",
-    list(package = "languageserver", quietly = TRUE)
+    list(package = "languageserver", lib.loc = rlsLib, quietly = TRUE)
   )
   if (!isTRUE(serverLoadable)) {
+    lg("  Not loadable, restoring .libPaths to: ", toString(oldLibPaths))
+    assign(".lib.loc", oldLibPaths, envir = environment(.libPaths))
     stop(
       "The languageserver package is not loadable. \n",
       "You can try running languageserver_install()"
