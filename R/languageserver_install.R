@@ -10,8 +10,6 @@
 #' @param fromGitHub `logical(1)`, if `TRUE`, will use
 #'   `remotes::install_github()`, otherwise `install.packages()` is
 #'   used to install the `languageserver` package.
-#' @param ref `character(1)`, passed to `remotes::install_github()`
-#'   when relevant.
 #' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
 #'   user to confirm the steps before installation. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
@@ -28,7 +26,6 @@ languageserver_install <- function(
   fullReinstall = TRUE,
   fromGitHub = TRUE,
   confirmBeforeInstall = TRUE,
-  ref = "master",
   dryRun = FALSE
 ) {
   oldLibPaths <- .libPaths()

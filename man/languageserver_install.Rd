@@ -6,7 +6,7 @@
 \usage{
 languageserver_install(rlsLib = getOption("langserver_library"),
   strictLibrary = TRUE, fullReinstall = TRUE, fromGitHub = TRUE,
-  confirmBeforeInstall = TRUE, ref = "master", dryRun = FALSE)
+  confirmBeforeInstall = TRUE, dryRun = FALSE)
 }
 \arguments{
 \item{rlsLib}{\code{character(1)} path to the library.}
@@ -26,9 +26,6 @@ used to install the \code{languageserver} package.}
 \item{confirmBeforeInstall}{\code{logical(1)} if \code{TRUE}, will ask the
 user to confirm the steps before installation. For non-interactive
 use, \code{FALSE} will skip the confirmation.}
-
-\item{ref}{\code{character(1)}, passed to \code{remotes::install_github()}
-when relevant.}
 
 \item{dryRun}{\code{logical(1)}, if \code{TRUE}, most actions will only be repored,
 not taken - nothing will be removed, created or installed.}
