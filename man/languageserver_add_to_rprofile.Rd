@@ -2,7 +2,7 @@
 % Please edit documentation in R/languageserver_add_to_rprofile.R
 \name{languageserver_add_to_rprofile}
 \alias{languageserver_add_to_rprofile}
-\title{Add languageserver initialization to Rprofile}
+\title{Add language server initialization to \code{.Rprofile}}
 \usage{
 languageserver_add_to_rprofile(rlsLib = getOption("langserver_library"),
   rprofilePath = locate_rprofile(), confirmBeforeChanging = TRUE,
@@ -16,7 +16,7 @@ to add the initialization code, or \code{NULL}. By default, adds the
 code to a \code{.Rprofile} file in the home directory of the current
 user.}
 
-\item{confirmBeforeChanging}{\code{logical(1)}, if \code{TRUE}, aks for user
+\item{confirmBeforeChanging}{\code{logical(1)}, if \code{TRUE}, asks for user
 confirmation before changing the file. For non-interactive
 use, \code{FALSE} will skip the confirmation.}
 
@@ -27,5 +27,5 @@ Defaults to the value of \code{append_code()}.}
 side-effects
 }
 \description{
-Add languageserver initialization to Rprofile
+Add language server initialization to \code{.Rprofile}
 }

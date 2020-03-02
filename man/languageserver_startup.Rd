@@ -2,7 +2,7 @@
 % Please edit documentation in R/languageserver_startup.R
 \name{languageserver_startup}
 \alias{languageserver_startup}
-\title{Prepare languageserver to be started}
+\title{Prepare language server to be started}
 \usage{
 languageserver_startup(rlsLib = getOption("langserver_library"),
   langServerProcessPatt = getOption("langserver_processPatt"),
@@ -12,7 +12,7 @@ languageserver_startup(rlsLib = getOption("langserver_library"),
 \item{rlsLib}{\code{character(1)} path to the library.}
 
 \item{langServerProcessPatt}{\code{character(1)}, pattern to
-recognize the process created by language server.}
+recognize the process created by \code{languageserver}.}
 
 \item{strictLibrary}{\code{logical(1)} if \code{TRUE}, all the dependencies
 of \code{languageserver} will be installed into \code{rlsLib}, otherwise
@@ -21,11 +21,11 @@ in \code{.libPaths()} will be installed.}
 
 \item{processArgs}{\code{list()} of arguments to \code{system2} to
 retrieve a list of processes. The command defaults to \code{wmic}
-for windows and \code{ps} for other sysnames.}
+for windows and \code{ps} for other \code{sysnames}.}
 }
 \value{
 side-effects
 }
 \description{
-Prepare languageserver to be started
+Prepare language server to be started
 }

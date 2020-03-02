@@ -1,12 +1,12 @@
-#' Prepare languageserver to be started
+#' Prepare language server to be started
 #'
 #' @inheritParams languageserver_install
 #'
 #' @param langServerProcessPatt `character(1)`, pattern to
-#'   recognize the process created by language server.
+#'   recognize the process created by `languageserver`.
 #' @param processArgs `list()` of arguments to `system2` to
 #'   retrieve a list of processes. The command defaults to `wmic`
-#'   for windows and `ps` for other sysnames.
+#'   for windows and `ps` for other `sysnames`.
 #'
 #' @return side-effects
 #' @export

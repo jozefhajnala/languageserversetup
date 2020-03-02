@@ -1,11 +1,11 @@
-#' Add languageserver initialization to Rprofile
+#' Add language server initialization to `.Rprofile`
 #'
 #' @inheritParams languageserver_install
 #' @param rprofilePath `character(1)`, path to the file where
 #'   to add the initialization code, or `NULL`. By default, adds the
 #'   code to a `.Rprofile` file in the home directory of the current
 #'   user.
-#' @param confirmBeforeChanging `logical(1)`, if `TRUE`, aks for user
+#' @param confirmBeforeChanging `logical(1)`, if `TRUE`, asks for user
 #'   confirmation before changing the file. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
 #' @param code `character()`, the code to be added to the file.

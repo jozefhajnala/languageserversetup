@@ -1,4 +1,4 @@
-#' Install language server to a separate library
+#' Install the `languageserver` package to a separate library
 #'
 #' @param rlsLib `character(1)` path to the library.
 #' @param strictLibrary `logical(1)` if `TRUE`, all the dependencies
@@ -13,8 +13,8 @@
 #' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
 #'   user to confirm the steps before installation. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
-#' @param dryRun `logical(1)`, if `TRUE`, most actions will only be repored,
-#'   not taken - nothing will be removed, created or installed.
+#' @param dryRun `logical(1)`, if `TRUE`, most actions will only be
+#'   reported, not taken - nothing will be removed, created or installed.
 #'
 #' @importFrom utils install.packages
 #'

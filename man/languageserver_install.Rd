@@ -2,7 +2,7 @@
 % Please edit documentation in R/languageserver_install.R
 \name{languageserver_install}
 \alias{languageserver_install}
-\title{Install language server to a separate library}
+\title{Install the \code{languageserver} package to a separate library}
 \usage{
 languageserver_install(rlsLib = getOption("langserver_library"),
   strictLibrary = TRUE, fullReinstall = TRUE, fromGitHub = TRUE,
@@ -27,12 +27,12 @@ used to install the \code{languageserver} package.}
 user to confirm the steps before installation. For non-interactive
 use, \code{FALSE} will skip the confirmation.}
 
-\item{dryRun}{\code{logical(1)}, if \code{TRUE}, most actions will only be repored,
-not taken - nothing will be removed, created or installed.}
+\item{dryRun}{\code{logical(1)}, if \code{TRUE}, most actions will only be
+reported, not taken - nothing will be removed, created or installed.}
 }
 \value{
 side-effects
 }
 \description{
-Install language server to a separate library
+Install the \code{languageserver} package to a separate library
 }

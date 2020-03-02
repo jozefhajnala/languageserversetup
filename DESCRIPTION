@@ -18,3 +18,4 @@ SystemRequirements: procps (linux), tasklist (windows)
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/jozefhajnala/languageserversetup
 BugReports: https://github.com/jozefhajnala/languageserversetup/issues
+Language: en-US

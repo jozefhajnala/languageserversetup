@@ -1,4 +1,4 @@
-#' Remove languageserver initialization from Rprofile
+#' Remove language server initialization from `.Rprofile`
 #'
 #' @inheritParams languageserver_add_to_rprofile
 #'

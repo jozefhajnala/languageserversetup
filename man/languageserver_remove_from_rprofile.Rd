@@ -2,7 +2,7 @@
 % Please edit documentation in R/languageserver_remove_from_rprofile.R
 \name{languageserver_remove_from_rprofile}
 \alias{languageserver_remove_from_rprofile}
-\title{Remove languageserver initialization from Rprofile}
+\title{Remove language server initialization from \code{.Rprofile}}
 \usage{
 languageserver_remove_from_rprofile(rlsLib = getOption("langserver_library"),
   rprofilePath = locate_rprofile(), code = append_code(rlsLib = rlsLib),
@@ -19,7 +19,7 @@ user.}
 \item{code}{\code{character()}, the code to be added to the file.
 Defaults to the value of \code{append_code()}.}
 
-\item{confirmBeforeChanging}{\code{logical(1)}, if \code{TRUE}, aks for user
+\item{confirmBeforeChanging}{\code{logical(1)}, if \code{TRUE}, asks for user
 confirmation before changing the file. For non-interactive
 use, \code{FALSE} will skip the confirmation.}
 }
@@ -27,5 +27,5 @@ use, \code{FALSE} will skip the confirmation.}
 side-effects
 }
 \description{
-Remove languageserver initialization from Rprofile
+Remove language server initialization from \code{.Rprofile}
 }
