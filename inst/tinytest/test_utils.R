@@ -63,3 +63,29 @@ expect_equal(
     "or use confirmBeforeWrite = FALSE to skip the confirmation"
   )
 )
+
+expect_equal(
+  languageserversetup:::system_dep_available(
+    list(command = "echo", "1"),
+    force = TRUE
+  ),
+  TRUE,
+  info = "echo command works"
+)
+
+expect_equal(
+  languageserversetup:::system_dep_available(
+    list(command = "madeupcommand", "1")
+  ),
+  TRUE,
+  info = "non-existing command gives TRUE if TRUE stored and force is FALSE"
+)
+
+expect_equivalent(
+  languageserversetup:::system_dep_available(
+    list(command = "madeupcommand", "1"),
+    force = TRUE
+  ),
+  FALSE,
+  info = "non-existing command gives FALSE"
+)

@@ -131,15 +131,23 @@ append_code <- function(
   invisible(code)
 }
 
-system_dep_available <- function() {
+system_dep_available <- function(
+  pars = suppressMessages(get_process_args()),
+  force = FALSE
+) {
 
   if (exists("sysDepAvailable", envir = .LangServerSetupEnv)) {
-    lg("system_dep_available found and returning")
-    return(get("sysDepAvailable", envir = .LangServerSetupEnv))
+    if (!isTRUE(force)) {
+      lg("system_dep_available found and returning")
+      return(get("sysDepAvailable", envir = .LangServerSetupEnv))
+    } else {
+      lg("system_dep_available found but force is TRUE, recomputing")
+    }
+  } else {
+    lg("system_dep_available not found, determining")
   }
 
-  lg("system_dep_available not found, determining")
-  pars <- suppressMessages(get_process_args())
+
   res <- do.call(system2, c(pars[-3L], stdout = FALSE))
   res <- res == 0L
   attr(res, "msg") <- if (!isTRUE(res)) {
