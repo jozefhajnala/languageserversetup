@@ -4,7 +4,7 @@
   options(
     langserver_library = path.expand(file.path("~", "languageserver-library")),
     langserver_processPatt = "languageserver::run",
-    langserver_quiet = FALSE,
+    langserver_quiet = TRUE,
     langserver_quiet_serverproc = FALSE,
     langserver_rprofile_candidates = c(
       atHome = path.expand(file.path("~", ".Rprofile")),
