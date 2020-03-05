@@ -124,8 +124,8 @@ append_code <- function(
   "# LanguageServer Setup Start (do not change this chunk)",
   "# to remove this, run languageserversetup::remove_from_rprofile",
   paste0("options(", "langserver_library", " = '", rlsLib, "')"),
-  "library(languageserversetup)",
-  "languageserver_startup()",
+  "languageserversetup::languageserver_startup()",
+  "unloadNamespace('languageserversetup')",
   "# LanguageServer Setup End"
 )) {
   invisible(code)

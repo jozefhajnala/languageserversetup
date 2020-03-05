@@ -50,8 +50,10 @@ expect_equal(
   c(
     "# LanguageServer Setup Start (do not change this chunk)",
     "# to remove this, run languageserversetup::remove_from_rprofile",
-    "options(langserver_library = 'test')", "library(languageserversetup)",
-    "languageserver_startup()", "# LanguageServer Setup End"
+    "options(langserver_library = 'test')",
+    "languageserversetup::languageserver_startup()",
+    "unloadNamespace('languageserversetup')",
+    "# LanguageServer Setup End"
   )
 )
 
