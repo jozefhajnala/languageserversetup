@@ -14,7 +14,14 @@ languageserver_add_to_rprofile(rlsLib = getOption("langserver_library"),
 \item{rprofilePath}{\code{character(1)}, path to the file where
 to add the initialization code, or \code{NULL}. By default, adds the
 code to a \code{.Rprofile} file in the home directory of the current
-user.}
+user. Please refer to \code{?Startup} for more details around
+\code{.Rprofile} files.
+
+Notably, if  the \code{R_PROFILE_USER} environment variable is set,
+the \code{.Rprofile} located in the home directory is ignored,
+therefore we may want to place the initialization code into the
+file specified by that variable using the \code{rprofilePath} argument
+in that case.}
 
 \item{confirmBeforeChanging}{\code{logical(1)}, if \code{TRUE}, asks for user
 confirmation before changing the file. For non-interactive

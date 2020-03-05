@@ -4,7 +4,14 @@
 #' @param rprofilePath `character(1)`, path to the file where
 #'   to add the initialization code, or `NULL`. By default, adds the
 #'   code to a `.Rprofile` file in the home directory of the current
-#'   user.
+#'   user. Please refer to `?Startup` for more details around
+#'   `.Rprofile` files.
+#'
+#'   Notably, if  the `R_PROFILE_USER` environment variable is set,
+#'   the `.Rprofile` located in the home directory is ignored,
+#'   therefore we may want to place the initialization code into the
+#'   file specified by that variable using the `rprofilePath` argument
+#'   in that case.
 #' @param confirmBeforeChanging `logical(1)`, if `TRUE`, asks for user
 #'   confirmation before changing the file. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
