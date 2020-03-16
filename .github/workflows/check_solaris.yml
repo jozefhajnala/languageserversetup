@@ -1,0 +1,12 @@
+name: check_solaris
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Check solaris-x86-patched
+      env:
+        DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
+        LANGSERVERSETUP_RUN_DEPLOY: false
+      run: sh inst/docker_stage.sh inst/check_rhub.R "solaris-x86-patched"

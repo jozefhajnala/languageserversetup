@@ -55,7 +55,7 @@ askYesNo <- if ( # nocov start
 } # nocov end
 
 get_process_args <- function(os = tolower(Sys.info()[["sysname"]])) {
-  if (os == "windows") {
+  if (identical(os, "windows")) {
     lg("sysname is windows, setting: ", sQuote("wmic"), " as command.")
     return(list(
       command = "wmic",
@@ -65,7 +65,7 @@ get_process_args <- function(os = tolower(Sys.info()[["sysname"]])) {
       stdout = TRUE
     ))
   }
-  if (os == "darwin") {
+  if (identical(os, "darwin")) {
     lg("sysname is darwin, setting: ", sQuote("ps"), " as command.")
     return(list(
       command = "ps",
@@ -73,7 +73,7 @@ get_process_args <- function(os = tolower(Sys.info()[["sysname"]])) {
       stdout = TRUE
     ))
   }
-  if (os == "linux") {
+  if (identical(os, "linux")) {
     lg("sysname is linux, setting: ", sQuote("ps"), " as command.")
     return(list(
       command = "ps",
@@ -81,6 +81,13 @@ get_process_args <- function(os = tolower(Sys.info()[["sysname"]])) {
       stdout = TRUE
     ))
   }
+
+  lg("sysname is ", os, ", attempting: ", sQuote("ps"), " as command.")
+  list(
+    command = "ps",
+    args = c("-p", Sys.getpid(),  "-o", "command", "--no-headers"),
+    stdout = TRUE
+  )
 }
 
 locate_rprofile <- function(

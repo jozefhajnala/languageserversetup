@@ -7,6 +7,7 @@
 ![Deploy-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_cran/badge.svg)
 ![Deploy-Dev](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_dev/badge.svg)
 ![Check-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/check_cran/badge.svg)
+![Check-Solaris](https://github.com/jozefhajnala/languageserversetup/workflows/check_solaris/badge.svg)
 [![License](https://img.shields.io/badge/license-AGPL%20(3.0)-success.svg?style=flat&labelColor=rgb(40,45,51))](http://www.gnu.org/licenses/agpl-3.0.html) 
 
 

@@ -13,6 +13,26 @@ expect_equal(
   "wmic"
 )
 
+expect_true(
+  is.list(languageserversetup:::get_process_args(os = NULL)) &&
+    length(languageserversetup:::get_process_args(os = NULL)) == 3L
+)
+
+expect_true(
+  is.list(languageserversetup:::get_process_args(os = NA)) &&
+    length(languageserversetup:::get_process_args(os = NA)) == 3L
+)
+
+expect_true(
+  is.list(languageserversetup:::get_process_args(os = "")) &&
+    length(languageserversetup:::get_process_args(os = "")) == 3L
+)
+
+expect_equal(
+  languageserversetup:::get_process_args(os = NULL)[["command"]],
+  "ps"
+)
+
 expect_equal(
   languageserversetup:::locate_rprofile(""),
   NULL
