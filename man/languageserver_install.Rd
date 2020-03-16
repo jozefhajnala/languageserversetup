@@ -6,12 +6,13 @@
 \usage{
 languageserver_install(rlsLib = getOption("langserver_library"),
   strictLibrary = TRUE, fullReinstall = TRUE, fromGitHub = TRUE,
-  confirmBeforeInstall = TRUE, dryRun = FALSE)
+  confirmBeforeInstall = TRUE, dryRun = FALSE, ...)
 }
 \arguments{
-\item{rlsLib}{\code{character(1)} path to the library.}
+\item{rlsLib}{\code{character(1)}, path to the library where the
+\code{languageserver} package will be installed.}
 
-\item{strictLibrary}{\code{logical(1)} if \code{TRUE}, all the dependencies
+\item{strictLibrary}{\code{logical(1)}, if \code{TRUE}, all the dependencies
 of \code{languageserver} will be installed into \code{rlsLib}, otherwise
 only those that are needed but not present in other libraries
 in \code{.libPaths()} will be installed.}
@@ -20,8 +21,9 @@ in \code{.libPaths()} will be installed.}
 recursively removed to re-install all the packages cleanly.}
 
 \item{fromGitHub}{\code{logical(1)}, if \code{TRUE}, will use
-\code{remotes::install_github()}, otherwise \code{install.packages()} is
-used to install the \code{languageserver} package.}
+\code{install-github.me} to install the current development version
+from GitHub. Otherwise \code{install.packages()} is used to install
+the \code{languageserver} package from CRAN.}
 
 \item{confirmBeforeInstall}{\code{logical(1)} if \code{TRUE}, will ask the
 user to confirm the steps before installation. For non-interactive
@@ -29,10 +31,16 @@ use, \code{FALSE} will skip the confirmation.}
 
 \item{dryRun}{\code{logical(1)}, if \code{TRUE}, most actions will only be
 reported, not taken - nothing will be removed, created or installed.}
+
+\item{...}{further arguments passed to \code{install.packages()} in case
+\code{fromGitHub} is set to \code{FALSE}.}
 }
 \value{
 side-effects
 }
 \description{
 Install the \code{languageserver} package to a separate library
+}
+\seealso{
+\code{\link[utils:install.packages]{utils::install.packages()}}
 }

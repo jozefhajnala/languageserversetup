@@ -9,12 +9,13 @@ languageserver_startup(rlsLib = getOption("langserver_library"),
   strictLibrary = TRUE, processArgs = get_process_args())
 }
 \arguments{
-\item{rlsLib}{\code{character(1)} path to the library.}
+\item{rlsLib}{\code{character(1)}, path to the library where the
+\code{languageserver} package will be installed.}
 
 \item{langServerProcessPatt}{\code{character(1)}, pattern to
 recognize the process created by \code{languageserver}.}
 
-\item{strictLibrary}{\code{logical(1)} if \code{TRUE}, all the dependencies
+\item{strictLibrary}{\code{logical(1)}, if \code{TRUE}, all the dependencies
 of \code{languageserver} will be installed into \code{rlsLib}, otherwise
 only those that are needed but not present in other libraries
 in \code{.libPaths()} will be installed.}

@@ -1,24 +1,29 @@
 #' Install the `languageserver` package to a separate library
 #'
-#' @param rlsLib `character(1)` path to the library.
-#' @param strictLibrary `logical(1)` if `TRUE`, all the dependencies
+#' @param rlsLib `character(1)`, path to the library where the
+#'   `languageserver` package will be installed.
+#' @param strictLibrary `logical(1)`, if `TRUE`, all the dependencies
 #'   of `languageserver` will be installed into `rlsLib`, otherwise
 #'   only those that are needed but not present in other libraries
 #'   in `.libPaths()` will be installed.
 #' @param fullReinstall `logical(1)`. If `TRUE`, `rlsLib` will be
 #'   recursively removed to re-install all the packages cleanly.
 #' @param fromGitHub `logical(1)`, if `TRUE`, will use
-#'   `remotes::install_github()`, otherwise `install.packages()` is
-#'   used to install the `languageserver` package.
+#'   `install-github.me` to install the current development version
+#'   from GitHub. Otherwise `install.packages()` is used to install
+#'   the `languageserver` package from CRAN.
 #' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
 #'   user to confirm the steps before installation. For non-interactive
 #'   use, `FALSE` will skip the confirmation.
 #' @param dryRun `logical(1)`, if `TRUE`, most actions will only be
 #'   reported, not taken - nothing will be removed, created or installed.
+#' @param ... further arguments passed to `install.packages()` in case
+#'   `fromGitHub` is set to `FALSE`.
 #'
 #' @importFrom utils install.packages
 #'
 #' @return side-effects
+#' @seealso [utils::install.packages()]
 #' @export
 languageserver_install <- function(
   rlsLib = getOption("langserver_library"),
@@ -26,7 +31,8 @@ languageserver_install <- function(
   fullReinstall = TRUE,
   fromGitHub = TRUE,
   confirmBeforeInstall = TRUE,
-  dryRun = FALSE
+  dryRun = FALSE,
+  ...
 ) {
 
   sysDepAvailable <- system_dep_available()
@@ -115,7 +121,8 @@ languageserver_install <- function(
     lg("running install.packages")
     utils::install.packages( # nocov start
       pkgs = "languageserver",
-      lib = rlsLib
+      lib = rlsLib,
+      ...
     ) # nocov end
   }
 }

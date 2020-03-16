@@ -9,7 +9,8 @@ languageserver_remove_from_rprofile(rlsLib = getOption("langserver_library"),
   confirmBeforeChanging = TRUE)
 }
 \arguments{
-\item{rlsLib}{\code{character(1)} path to the library.}
+\item{rlsLib}{\code{character(1)}, path to the library where the
+\code{languageserver} package will be installed.}
 
 \item{rprofilePath}{\code{character(1)}, path to the file where
 to add the initialization code, or \code{NULL}. By default, adds the
