@@ -9,4 +9,4 @@ jobs:
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
         LANGSERVERSETUP_RUN_DEPLOY: true
-      run: sh inst/docker_stage.sh inst/check_rhub.R "macos-elcapitan-release"
+      run: sh ci/docker_stage.sh ci/check_rhub.R "macos-elcapitan-release"

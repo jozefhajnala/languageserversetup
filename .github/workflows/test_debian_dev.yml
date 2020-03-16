@@ -8,4 +8,4 @@ jobs:
     - name: Test deployment
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
-      run:  sh inst/docker_stage.sh inst/test_deploy.R dev
+      run:  sh ci/docker_stage.sh ci/test_deploy.R dev
