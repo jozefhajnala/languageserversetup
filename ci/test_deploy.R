@@ -1,12 +1,11 @@
 args <- commandArgs(trailingOnly = TRUE)
 fromGitHub <- identical(args, "dev")
+options(Ncpus = parallel::detectCores())
 
 message("Running deploy test")
 
 message("\n\nInstalling dependencies")
-system("apt-get update && apt-get -y install libxml2-dev procps")
-install.packages("remotes")
-install.packages("tinytest")
+system("apt-get update && apt-get -y install procps")
 install.packages(".", repos = NULL, type = "source")
 
 message("\n\nAttaching languageserversetup")
