@@ -1,7 +1,7 @@
 .LangServerSetupEnv <- new.env(parent = emptyenv())
 
 .onLoad <- function(libName, pkgName) { # nocov start
-  options(
+  initialize_options(
     langserver_library = path.expand(file.path("~", "languageserver-library")),
     langserver_processPatt = "languageserver::run",
     langserver_quiet = TRUE,

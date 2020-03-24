@@ -8,10 +8,12 @@ message("\n\nInstalling dependencies")
 system("apt-get update && apt-get -y install procps")
 install.packages(".", repos = NULL, type = "source")
 
+message("\n\nSetting options")
+rlsLib <- file.path(tempdir(), "languageserver-library")
+options(langserver_library = rlsLib)
+
 message("\n\nAttaching languageserversetup")
 library(languageserversetup)
-
-rlsLib <- file.path(tempdir(), "languageserver-library")
 
 message("\n\nInstalling languageserver")
 languageserver_install(
@@ -21,10 +23,7 @@ languageserver_install(
 )
 
 message("\n\nTesting languageserver_startup")
-languageserver_startup(
-  rlsLib = rlsLib,
-  langServerProcessPatt = ""
-)
+languageserver_startup(langServerProcessPatt = "")
 
 message("\n\nTesting addition of code to .Rprofile")
 languageserver_add_to_rprofile(

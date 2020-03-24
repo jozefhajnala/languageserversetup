@@ -171,3 +171,16 @@ system_dep_available <- function(
   assign("sysDepAvailable", value = res, envir = .LangServerSetupEnv)
   res
 }
+
+initialize_options <- function(...) {
+  initialize_option <- function(optName, optValue) {
+    if (is.null(getOption(optName))) {
+      lg("Setting option: ", sQuote(optName), " to: ", optValue)
+      options(structure(list(optValue), .Names = optName))
+    } else {
+      lg("Keeping option: ", sQuote(optName), " value: ", getOption(optName))
+    }
+  }
+  opts <- list(...)
+  invisible(Map(initialize_option, names(opts), opts))
+}
