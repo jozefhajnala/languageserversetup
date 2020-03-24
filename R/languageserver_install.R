@@ -112,7 +112,9 @@ languageserver_install <- function(
     lg("running dev installation")
     source( # nocov start
       "https://install-github.me/REditorSupport/languageserver"
-    ) # nocov end
+    )
+    utils::install.packages("languageserversetup", lib = rlsLib)
+    # nocov end
   } else {
     if (isTRUE(dryRun)) {
       lg("this is a dryRun, would run utils::install.packages")
@@ -120,7 +122,7 @@ languageserver_install <- function(
     }
     lg("running install.packages")
     utils::install.packages( # nocov start
-      pkgs = "languageserver",
+      pkgs = c("languageserver", "languageserversetup"),
       lib = rlsLib,
       ...
     ) # nocov end

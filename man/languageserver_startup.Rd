@@ -6,7 +6,8 @@
 \usage{
 languageserver_startup(rlsLib = getOption("langserver_library"),
   langServerProcessPatt = getOption("langserver_processPatt"),
-  strictLibrary = TRUE, processArgs = get_process_args())
+  strictLibrary = TRUE, os = tolower(Sys.info()[["sysname"]]),
+  pid = Sys.getpid())
 }
 \arguments{
 \item{rlsLib}{\code{character(1)}, path to the library where the
@@ -20,9 +21,11 @@ of \code{languageserver} will be installed into \code{rlsLib}, otherwise
 only those that are needed but not present in other libraries
 in \code{.libPaths()} will be installed.}
 
-\item{processArgs}{\code{list()} of arguments to \code{system2} to
-retrieve a list of processes. The command defaults to \code{wmic}
-for windows and \code{ps} for other \code{sysnames}.}
+\item{os}{\code{character(1)}, name of the OS, usually retrieved
+as the \code{"sysname"} element of \code{Sys.info}, all lowercase.}
+
+\item{pid}{\code{integer(1)}, id of the process to investigate,
+usually retrieved by \code{Sys.getpid}}
 }
 \value{
 side-effects

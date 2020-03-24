@@ -11,6 +11,7 @@ install.packages(".", repos = NULL, type = "source")
 message("\n\nSetting options")
 rlsLib <- file.path(tempdir(), "languageserver-library")
 options(langserver_library = rlsLib)
+options(langserver_quiet = FALSE)
 
 message("\n\nAttaching languageserversetup")
 library(languageserversetup)
