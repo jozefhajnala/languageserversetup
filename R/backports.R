@@ -60,3 +60,11 @@ trimws <- if ( # nocov start
     mysub("[ \t\r\n]+$", mysub("^[ \t\r\n]+", x))
   }
 } # nocov end
+
+isFALSE <- if ( # nocov start
+  is.element("package:base", utils::find("isFALSE", mode = "function"))
+) {
+  base::isFALSE
+} else {
+  function(x) is.logical(x) && length(x) == 1L && !is.na(x) && !x
+} # nocov end

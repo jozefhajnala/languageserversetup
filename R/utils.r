@@ -1,5 +1,5 @@
 lg <- function(..., stayQuiet = getOption("langserver_quiet")) {
-  if (!isTRUE(stayQuiet)) message(...)
+  if (isFALSE(stayQuiet)) message(...)
   invisible()
 }
 
