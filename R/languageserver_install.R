@@ -48,14 +48,15 @@ languageserver_install <- function(
   continue <- if (isTRUE(confirmBeforeInstall)) {
     try(askYesNo( # nocov start
       paste(
-        "This will attempt to use remotes::install_github",
+        "This will attempt to use:",
+        "source('https://install-github.me/REditorSupport/languageserver')",
         "to install REditorSupport/languageserver into:",
         rlsLib,
         if (isTRUE(strictLibrary))
           "All dependencies will also be installed there"
         else
           "only installing unavailable dependencies",
-        if (isTRUE(fullReinstall))
+        if (isTRUE(fullReinstall) && dir.exists(rlsLib))
           paste("! The directory", rlsLib, "will be RECURSIVELY REMOVED !"),
         "Do you agree?",
         sep = "\n"
@@ -106,8 +107,8 @@ languageserver_install <- function(
 
   if (isTRUE(fromGitHub)) {
     if (isTRUE(dryRun)) {
-      lg("this is a dryRun, would run remotes::install_github")
-      return("remotes::install_github")
+      lg("this is a dryRun, would run source(...)")
+      return("source(...)")
     }
     lg("running dev installation")
     source( # nocov start

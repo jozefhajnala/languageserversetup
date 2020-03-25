@@ -33,7 +33,13 @@ languageserver_add_to_rprofile <- function(
   filePath <- make_rprofile_path(rprofilePath)
   continue <- if (isTRUE(confirmBeforeChanging)) {
     try(askYesNo( # nocov start
-      paste0("This will append code to: ", filePath, "\n", "Do you agree?"),
+      paste(
+        "This will append the following code: \n",
+        paste(code, collapse = "\n"),
+        paste0("\n", "to: ", filePath, "\n"),
+        "Do you agree?",
+        sep = "\n"
+      ),
       default = FALSE
     )) # nocov end
   } else {

@@ -5,7 +5,7 @@ if (!languageserversetup:::system_dep_available()) {
 # development version used by default ----
 expect_equal(
   languageserver_install(confirmBeforeInstall = FALSE, dryRun = TRUE),
-  "remotes::install_github"
+  "source(...)"
 )
 
 # utils::install.packages used if requested ----
