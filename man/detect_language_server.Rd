@@ -22,7 +22,7 @@ is needed as the linting processes are created with callr as
 sub-processes of the main Language Server process.}
 }
 \value{
-logical(1), \code{TRUE} if the process with \code{pid} (or, optionallt,
+logical(1), \code{TRUE} if the process with \code{pid} (or, optionally,
 any of its parents) is detected as the R Language Server process.
 Otherwise \code{FALSE}.
 }

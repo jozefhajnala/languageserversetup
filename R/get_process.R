@@ -62,7 +62,7 @@ is_language_server <- function(pid, os, langServerProcessPatt) {
 #'   is needed as the linting processes are created with callr as
 #'   sub-processes of the main Language Server process.
 #'
-#' @return logical(1), `TRUE` if the process with `pid` (or, optionallt,
+#' @return logical(1), `TRUE` if the process with `pid` (or, optionally,
 #'   any of its parents) is detected as the R Language Server process.
 #'   Otherwise `FALSE`.
 detect_language_server <- function(
