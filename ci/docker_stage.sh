@@ -21,6 +21,7 @@ docker cp $dir_root $container_name:/root
 docker exec \
   --workdir /root/$dir_package \
   --env LANGSERVERSETUP_RUN_DEPLOY=$LANGSERVERSETUP_RUN_DEPLOY \
+  --env LANGSERVERSETUP_TOKEN_CODECOV=$LANGSERVERSETUP_TOKEN_CODECOV \
   $container_name \
   Rscript "$@"
 

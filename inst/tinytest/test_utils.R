@@ -10,6 +10,17 @@ expect_equal(
 
 tmpFile <- tempfile()
 file.create(tmpFile)
+
+expect_equal(
+  languageserversetup:::locate_rprofile(c(atHome = tmpFile, atEnv = "")),
+  tmpFile
+)
+
+expect_equal(
+  languageserversetup:::locate_rprofile(c(atHome = "", atEnv = tmpFile)),
+  tmpFile
+)
+
 languageserver_add_to_rprofile(
   rlsLib = "test",
   tmpFile,

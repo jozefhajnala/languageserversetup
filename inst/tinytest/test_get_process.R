@@ -82,3 +82,13 @@ expect_equal(
   ),
   "9452"
 )
+
+expect_equal(
+  languageserversetup:::get_parent_process_args("windows", "1"),
+  "process where processid=1 get parentprocessid"
+)
+
+expect_equal(
+  languageserversetup:::get_parent_process_args("linux", "1"),
+  "-o ppid= 1"
+)
