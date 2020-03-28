@@ -2,13 +2,16 @@
 
 > Setup and initialize R language server seamlessly and automatically with editors such as VS Code across platforms.
 
+[![CRAN](http://www.r-pkg.org/badges/version/languageserversetup)](https://cran.r-project.org/package=languageserversetup)
+[![Dependencies](https://tinyverse.netlify.com/badge/languageserversetup)](https://cran.r-project.org/package=languageserversetup)
+[![License](https://img.shields.io/badge/license-AGPL%20(3.0)-success.svg?style=flat&labelColor=rgb(40,45,51))](http://www.gnu.org/licenses/agpl-3.0.html) 
+![Check-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/check_cran/badge.svg)
+![Check-Solaris](https://github.com/jozefhajnala/languageserversetup/workflows/check_solaris/badge.svg)
+
 ![Deploy-MS-Win](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_win/badge.svg)
 ![Deploy-MacOS](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_macos/badge.svg)
 ![Deploy-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_cran/badge.svg)
 ![Deploy-Dev](https://github.com/jozefhajnala/languageserversetup/workflows/deploy_debian_dev/badge.svg)
-![Check-CRAN](https://github.com/jozefhajnala/languageserversetup/workflows/check_cran/badge.svg)
-![Check-Solaris](https://github.com/jozefhajnala/languageserversetup/workflows/check_solaris/badge.svg)
-[![License](https://img.shields.io/badge/license-AGPL%20(3.0)-success.svg?style=flat&labelColor=rgb(40,45,51))](http://www.gnu.org/licenses/agpl-3.0.html) 
 
 
 ## Features
@@ -85,9 +88,11 @@ If the above does not succeed, remove the `languageserersetup` related code from
 
 ## Customizing the behavior
 
-### The location of the languageserver library
+### Location of the languageserver library
 
-The default location for the library is `path.expand(file.path("~", "languageserver-library"))`. The simplest way to customize the location of the library is to use `options(langserver_library = "desired/path/to/library")` and place that option into the `.Rprofile`.
+- The default location for the library is `path.expand(file.path("~", "languageserver-library"))`.
+- To customize the location of the library, set `options(langserver_library = "/desired/path/to/library")` _before_ running `languageserver_install()`.
+- To tweak the behavior manually you can always change the `.Rprofile` code chunk created by `languageserver_add_to_rprofile()` to your liking manually. Since the installation is stand-alone, if you want, you can also manually move the entire library to a new location by simply copying the library directory.
 
 ### Used `.Rprofile`
 
