@@ -76,3 +76,20 @@ expect_equivalent(
   FALSE,
   info = "non-existing command gives FALSE"
 )
+
+languageserversetup:::initialize_options(tmpOption = 1L)
+expect_equal(
+  getOption("tmpOption"),
+  1L,
+  info = "non-existing option greated"
+)
+
+languageserversetup:::initialize_options(
+  tmpOption = 10L
+)
+expect_equal(
+  getOption("tmpOption"),
+  1L,
+  info = "existing option not overwritten"
+)
+options(tmpOption = NULL)
