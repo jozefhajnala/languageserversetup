@@ -20,7 +20,7 @@
 #' @param ... further arguments passed to `install.packages()` in case
 #'   `fromGitHub` is set to `FALSE`.
 #'
-#' @importFrom utils install.packages
+#' @importFrom utils install.packages installed.packages
 #'
 #' @return side-effects
 #' @seealso [utils::install.packages()]
@@ -114,7 +114,6 @@ languageserver_install <- function(
     source( # nocov start
       "https://install-github.me/REditorSupport/languageserver"
     )
-    utils::install.packages("languageserversetup", lib = rlsLib)
     # nocov end
   } else {
     if (isTRUE(dryRun)) {
@@ -123,9 +122,34 @@ languageserver_install <- function(
     }
     lg("running install.packages")
     utils::install.packages( # nocov start
-      pkgs = c("languageserver", "languageserversetup"),
+      pkgs = c("languageserver"),
       lib = rlsLib,
       ...
     ) # nocov end
   }
+
+  if (isTRUE(dryRun)) { # nocov start
+    lg("This is a dryRun, would install languageserversetup")
+  } else {
+    lg("Making languageserversetup available in langugeserver library.")
+    pkgs <- utils::installed.packages(lib.loc = oldLibPaths)
+    cpRes <- file.copy(
+      file.path(
+        pkgs[rownames(pkgs) == "languageserversetup", "LibPath"],
+        "languageserversetup"
+      ),
+      rlsLib,
+      recursive = TRUE
+    )
+    if (!isTRUE(all(cpRes))) {
+      lg("Copying failed, attempting install from source.")
+      utils::install.packages(
+        pkgs = c("languageserversetup"),
+        lib = rlsLib,
+        type = "source"
+      )
+    }
+  } # nocov end
+
+  invisible()
 }

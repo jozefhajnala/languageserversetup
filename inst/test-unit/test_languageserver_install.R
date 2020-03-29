@@ -1,4 +1,5 @@
-if (!languageserversetup:::system_dep_available()) {
+if (!languageserversetup:::system_dep_available(force = TRUE)) {
+  message("System dependency not available, not running tests.")
   q("no", status = 0)
 }
 
