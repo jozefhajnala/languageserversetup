@@ -10,6 +10,8 @@ expect_equal(
 
 # Test a failed load ----
 oldLibPaths <- .libPaths()
+rstudio <- Sys.getenv("RSTUDIO")
+if (identical(rstudio, "1")) Sys.setenv("RSTUDIO" = "-1")
 expect_error(
   languageserver_startup(
     rlsLib = file.path(tempdir(), "nothing-here"),
@@ -17,6 +19,8 @@ expect_error(
     langServerProcessPatt = ""
   )
 )
+if (identical(rstudio, "1")) Sys.setenv("RSTUDIO" = "1")
+
 
 # After failed load, libPaths should be restored ----
 expect_equal(

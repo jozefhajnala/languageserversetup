@@ -22,6 +22,11 @@ languageserver_startup <- function(
   lg("languageserver_startup Starting")
   on.exit(lg("languageserver_startup Exiting"))
 
+  if (identical(Sys.getenv("RSTUDIO"), "1")) {
+    lg("  This looks like RStudio, not doing anything.")
+    return(invisible(NA))
+  }
+
   oldLibPaths <- .libPaths()
   lg("  Current .libPaths: ", toString(oldLibPaths))
 
