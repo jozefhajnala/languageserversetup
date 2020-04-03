@@ -45,13 +45,16 @@ confirm_message <- function(msg = paste0(
 append_code <- function(
   rlsLib = getOption("langserver_library"),
   code = c(
-  "# LanguageServer Setup Start (do not change this chunk)",
-  "# to remove this, run languageserversetup::remove_from_rprofile",
-  paste0("options(", "langserver_library", " = '", rlsLib, "')"),
-  "languageserversetup::languageserver_startup()",
-  "unloadNamespace('languageserversetup')",
-  "# LanguageServer Setup End"
-)) {
+    "# LanguageServer Setup Start (do not change this chunk)",
+    "# to remove this, run languageserversetup::remove_from_rprofile",
+    "if (requireNamespace('languageserversetup', quietly = TRUE)) {",
+    paste0("  options(", "langserver_library", " = '", rlsLib, "')"),
+    "  languageserversetup::languageserver_startup()",
+    "  unloadNamespace('languageserversetup')",
+    "}",
+    "# LanguageServer Setup End"
+  )
+) {
   invisible(code)
 }
 
