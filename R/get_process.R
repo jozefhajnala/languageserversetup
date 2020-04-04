@@ -1,16 +1,49 @@
+get_process_fun <- function(os = tolower(Sys.info()[["sysname"]])) {
+  lg("    sysname is ", os)
+  res <- if (identical(os, "windows")) "system" else "system2"
+  lg("    setting get_process_fun: ", toString(res))
+  res
+}
+
 get_process_args <- function(
   os = tolower(Sys.info()[["sysname"]]),
   pid = Sys.getpid(),
   argsFun = get_current_process_args
 ) {
   lg("    sysname is ", os, ", pid is: ", pid)
-  res <- list(
-    command = get_process_command(os),
-    args = argsFun(os, pid),
-    stdout = get_process_stdout(os)
-  )
+  res <- if (identical(os, "windows")) {
+    list(
+      command = paste(get_process_command(os), argsFun(os, pid)),
+      intern = TRUE
+    )
+  } else {
+    list(
+      command = get_process_command(os),
+      args = argsFun(os, pid),
+      stdout = get_process_stdout(os)
+    )
+  }
   lg("    setting args: ", toString(res))
   res
+}
+
+get_process_detection_args <- function(
+  os = tolower(Sys.info()[["sysname"]]),
+  pid = Sys.getpid()
+) {
+  args <- get_process_args(
+    os = os,
+    pid = pid,
+    argsFun = get_current_process_args
+  )
+  c(
+    args[-length(args)],
+    if (identical(os, "windows")) {
+      list(intern = FALSE, ignore.stdout = TRUE)
+    } else {
+      list(stdout = FALSE)
+    }
+  )
 }
 
 get_process_command <- function(os) {
@@ -40,9 +73,12 @@ get_parent_process_args <- function(os, pid) {
 
 is_language_server <- function(pid, os, langServerProcessPatt) {
   processArgs <- get_process_args(pid = pid, os = os)
-  lg("    running do.call system2 with: ", toString(processArgs))
-  cmd <- do.call(system2, processArgs)
-  if (identical(processArgs[["command"]], "wmic")) cmd <- wmic_cleanup(cmd)
+  processFun <- get_process_fun(os = os)
+  lg("    running do.call ",  processFun, " with: ", toString(processArgs))
+  cmd <- do.call(processFun, processArgs)
+  if (grepl("^wmic", processArgs[["command"]])) {
+    cmd <- wmic_cleanup(cmd)
+  }
   lg("    determined cmd: ", toString(cmd))
 
   isLangServer <- any(grepl(langServerProcessPatt, cmd, fixed = TRUE))
@@ -87,9 +123,10 @@ detect_language_server <- function(
   parentProcessArgs <- get_process_args(
     pid = pid, os = os, argsFun = get_parent_process_args
   )
-  lg("   running do.call system2 with: ", toString(parentProcessArgs))
-  parentPid <- trimws(do.call(system2, parentProcessArgs))
-  if (identical(parentProcessArgs[["command"]], "wmic")) {
+  processFun <- get_process_fun(os = os)
+  lg("   running do.call ", processFun, " with: ", toString(parentProcessArgs))
+  parentPid <- trimws(do.call(processFun, parentProcessArgs))
+  if (grepl("^wmic", parentProcessArgs[["command"]])) {
     parentPid <- wmic_cleanup(parentPid)
   }
   parentPid <- suppressWarnings(parentPid[!is.na(as.numeric(parentPid))])

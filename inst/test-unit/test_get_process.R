@@ -1,4 +1,19 @@
 expect_equal(
+  languageserversetup:::get_process_fun("windows"),
+  "system"
+)
+
+expect_equal(
+  languageserversetup:::get_process_fun("linux"),
+  "system2"
+)
+
+expect_equal(
+  languageserversetup:::get_process_fun("somethingelse"),
+  "system2"
+)
+
+expect_equal(
   languageserversetup:::get_process_args(os = "darwin")[["command"]],
   "ps"
 )
@@ -9,8 +24,13 @@ expect_equal(
 )
 
 expect_equal(
-  languageserversetup:::get_process_args(os = "windows")[["command"]],
-  "wmic"
+  languageserversetup:::get_process_args(os = "windows", pid = 1)[["command"]],
+  "wmic process where processid=1 get commandline"
+)
+
+expect_equal(
+  languageserversetup:::get_process_args(os = "windows", pid = 1)[["intern"]],
+  TRUE
 )
 
 expect_true(
@@ -36,9 +56,8 @@ expect_equal(
 expect_equal(
   languageserversetup:::get_process_args(os = "windows", pid = "1"),
   list(
-    command = "wmic",
-    args = "process where processid=1 get commandline",
-    stdout = TRUE
+    command = "wmic process where processid=1 get commandline",
+    intern = TRUE
   )
 )
 
@@ -91,4 +110,13 @@ expect_equal(
 expect_equal(
   languageserversetup:::get_parent_process_args("linux", "1"),
   "-o ppid= 1"
+)
+
+expect_equal(
+  languageserversetup:::get_process_detection_args("windows", "1"),
+  list(
+    command = "wmic process where processid=1 get commandline",
+    intern = FALSE,
+    ignore.stdout = TRUE
+  )
 )

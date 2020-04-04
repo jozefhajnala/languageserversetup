@@ -66,7 +66,10 @@ expect_equal(
 
 expect_equal(
   languageserversetup:::system_dep_available(
-    list(command = "echo", "1"),
+    utils::modifyList(
+      languageserversetup:::get_process_detection_args(),
+      list(command = "echo")
+    ),
     force = TRUE
   ),
   TRUE,
@@ -75,15 +78,21 @@ expect_equal(
 
 expect_equal(
   languageserversetup:::system_dep_available(
-    list(command = "madeupcommand", "1")
+    utils::modifyList(
+      languageserversetup:::get_process_detection_args(),
+      list(command = "madeupcommand")
+    )
   ),
   TRUE,
-  info = "non-existing command gives TRUE if TRUE stored and force is FALSE"
+  info = "non-existing command gives TRUE if TRUE stored and force=FALSE"
 )
 
 expect_equivalent(
   languageserversetup:::system_dep_available(
-    list(command = "madeupcommand", "1"),
+    utils::modifyList(
+      languageserversetup:::get_process_detection_args(),
+      list(command = "madeupcommand")
+    ),
     force = TRUE
   ),
   FALSE,
@@ -106,3 +115,12 @@ expect_equal(
   info = "existing option not overwritten"
 )
 options(tmpOption = NULL)
+
+expect_equal(
+  languageserversetup:::detect_language_server(
+    Sys.getpid(),
+    tolower(Sys.info()[["sysname"]]),
+    "blabla"
+  ),
+  FALSE
+)

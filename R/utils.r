@@ -59,7 +59,8 @@ append_code <- function(
 }
 
 system_dep_available <- function(
-  pars = suppressMessages(get_process_args()),
+  processArgs = suppressMessages(get_process_detection_args()),
+  processFun = get_process_fun(),
   force = FALSE
 ) {
 
@@ -74,13 +75,14 @@ system_dep_available <- function(
     lg("system_dep_available not found, determining")
   }
 
-  res <- do.call(system2, c(pars[-3L], stdout = FALSE))
+  res <- do.call(processFun, args = processArgs)
   res <- res == 0L
   attr(res, "msg") <- if (!isTRUE(res)) {
     paste0(
-      "The command ", sQuote(pars[["command"]]), " cannot run successfully.\n",
+      "The command ", sQuote(processArgs[["command"]]),
+      " cannot run successfully.\n",
       "Please make sure the software is available to use the package.\n",
-      if (pars[["command"]] == "ps") {
+      if (processArgs[["command"]] == "ps") {
         paste("Installing", sQuote("procps"), "might help")
       }
     )
