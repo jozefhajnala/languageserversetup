@@ -59,8 +59,7 @@ append_code <- function(
 }
 
 system_dep_available <- function(
-  processArgs = suppressMessages(get_process_detection_args()),
-  processFun = get_process_fun(),
+  processArgs = get_process_args(output = FALSE, parent = FALSE),
   force = FALSE
 ) {
 
@@ -75,14 +74,14 @@ system_dep_available <- function(
     lg("system_dep_available not found, determining")
   }
 
-  res <- do.call(processFun, args = processArgs)
+  res <- do.call(processArgs$what, args = processArgs$args)
   res <- res == 0L
   attr(res, "msg") <- if (!isTRUE(res)) {
     paste0(
-      "The command ", sQuote(processArgs[["command"]]),
+      "The command ", sQuote(processArgs[["args"]][["command"]]),
       " cannot run successfully.\n",
       "Please make sure the software is available to use the package.\n",
-      if (processArgs[["command"]] == "ps") {
+      if (processArgs[["args"]][["command"]] == "ps") {
         paste("Installing", sQuote("procps"), "might help")
       }
     )
@@ -104,4 +103,11 @@ initialize_options <- function(...) {
   }
   opts <- list(...)
   invisible(Map(initialize_option, names(opts), opts))
+}
+
+wmic_cleanup <- function(cmd) {
+  if (length(cmd) > 1L) cmd <- cmd[-1L]
+  cmd <- trimws(cmd)
+  cmd <- cmd[cmd != ""]
+  cmd
 }

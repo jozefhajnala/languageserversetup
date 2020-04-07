@@ -62,6 +62,9 @@ expect_equal(
 )
 
 message("\n\nTesting languageserver_startup")
+
+origRStudio <- Sys.getenv("RSTUDIO")
+Sys.setenv("RSTUDIO" = "-1")
 expect_equal(
   languageserver_startup(
     rlsLib = rlsLib,
@@ -69,6 +72,7 @@ expect_equal(
   ),
   TRUE
 )
+Sys.setenv("RSTUDIO" = origRStudio)
 
 message("\n\nDetaching packages before following tests")
 cat(names(utils::sessionInfo()$otherPkgs))

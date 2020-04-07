@@ -30,7 +30,7 @@ languageserver_startup <- function(
   oldLibPaths <- .libPaths()
   lg("  Current .libPaths: ", toString(oldLibPaths))
 
-  isLangServer <- detect_language_server(
+  isLangServer <- languageserver_detect(
     pid = pid,
     os = os,
     langServerProcessPatt = langServerProcessPatt

@@ -67,7 +67,7 @@ expect_equal(
 expect_equal(
   languageserversetup:::system_dep_available(
     utils::modifyList(
-      languageserversetup:::get_process_detection_args(),
+      languageserversetup:::get_process_args(output = FALSE),
       list(command = "echo")
     ),
     force = TRUE
@@ -79,8 +79,8 @@ expect_equal(
 expect_equal(
   languageserversetup:::system_dep_available(
     utils::modifyList(
-      languageserversetup:::get_process_detection_args(),
-      list(command = "madeupcommand")
+      languageserversetup:::get_process_args(output = FALSE),
+      list(args = list(command = "madeupcommand"))
     )
   ),
   TRUE,
@@ -89,9 +89,9 @@ expect_equal(
 
 expect_equivalent(
   languageserversetup:::system_dep_available(
-    utils::modifyList(
-      languageserversetup:::get_process_detection_args(),
-      list(command = "madeupcommand")
+    processArgs = utils::modifyList(
+      languageserversetup:::get_process_args(output = FALSE),
+      list(args = list(command = "madeupcommand"))
     ),
     force = TRUE
   ),
@@ -117,7 +117,7 @@ expect_equal(
 options(tmpOption = NULL)
 
 expect_equal(
-  languageserversetup:::detect_language_server(
+  languageserversetup:::languageserver_detect(
     Sys.getpid(),
     tolower(Sys.info()[["sysname"]]),
     "blabla"
