@@ -9,7 +9,7 @@
 #' @param fullReinstall `logical(1)`. If `TRUE`, `rlsLib` will be
 #'   recursively removed to re-install all the packages cleanly.
 #' @param fromGitHub `logical(1)`, if `TRUE`, will use
-#'   `install-github.me` to install the current development version
+#'   the remotes package to install the current development version
 #'   from GitHub. Otherwise `install.packages()` is used to install
 #'   the `languageserver` package from CRAN.
 #' @param confirmBeforeInstall `logical(1)` if `TRUE`, will ask the
@@ -17,6 +17,12 @@
 #'   use, `FALSE` will skip the confirmation.
 #' @param dryRun `logical(1)`, if `TRUE`, most actions will only be
 #'   reported, not taken - nothing will be removed, created or installed.
+#' @param ref `character(1)`, when `fromGitHub` is `TRUE`, ref is the
+#'   desired git reference. Usually a commit, tag, or branch name.
+#' @param Ncpus `integer(1)`, number of the number of parallel processes
+#'   to use for a parallel install of more than one source package.
+#'   Values greater than one are supported if the make command specified
+#'   by `Sys.getenv("MAKE", "make")` accepts argument `-k -j Ncpus`.
 #' @param ... further arguments passed to `install.packages()` in case
 #'   `fromGitHub` is set to `FALSE`.
 #'
@@ -32,6 +38,8 @@ languageserver_install <- function(
   fromGitHub = TRUE,
   confirmBeforeInstall = TRUE,
   dryRun = FALSE,
+  ref = "master",
+  Ncpus = max(1L, getOption("Ncpus")),
   ...
 ) {
 
@@ -48,8 +56,7 @@ languageserver_install <- function(
   continue <- if (isTRUE(confirmBeforeInstall)) {
     try(askYesNo( # nocov start
       paste(
-        "This will attempt to use:",
-        "source('https://install-github.me/REditorSupport/languageserver')",
+        "This will attempt to use: remotes::install_github()",
         "to install REditorSupport/languageserver into:",
         rlsLib,
         if (isTRUE(strictLibrary))
@@ -107,12 +114,26 @@ languageserver_install <- function(
 
   if (isTRUE(fromGitHub)) {
     if (isTRUE(dryRun)) {
-      lg("this is a dryRun, would run source(...)")
-      return("source(...)")
+      lg("this is a dryRun, would run remotes::install_github(...)")
+      return("remotes::install_github(...)")
     }
+    # nocov start
     lg("running dev installation")
-    source( # nocov start
-      "https://install-github.me/REditorSupport/languageserver"
+    # remotes is a dependency anyway, install it first
+    # and use to install the dev version
+    lg("installing remotes into: ", rlsLib)
+    utils::install.packages("remotes", lib = rlsLib)
+    installGithubArgs <- list(
+      repo = "REditorSupport/languageserver",
+      ref = ref,
+      upgrade = "never",
+      Ncpus = Ncpus
+    )
+    lg("arguments to remotes::install_github: ", toString(installGithubArgs))
+    lg("calling remotes::install_github to install languageserver")
+    do.call(
+      get("install_github", envir = asNamespace("remotes")),
+      installGithubArgs
     )
     # nocov end
   } else {
@@ -124,6 +145,7 @@ languageserver_install <- function(
     utils::install.packages( # nocov start
       pkgs = c("languageserver"),
       lib = rlsLib,
+      Ncpus = Ncpus,
       ...
     ) # nocov end
   }
