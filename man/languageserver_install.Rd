@@ -4,9 +4,15 @@
 \alias{languageserver_install}
 \title{Install the \code{languageserver} package to a separate library}
 \usage{
-languageserver_install(rlsLib = getOption("langserver_library"),
-  strictLibrary = TRUE, fullReinstall = TRUE, fromGitHub = TRUE,
-  confirmBeforeInstall = TRUE, dryRun = FALSE, ...)
+languageserver_install(
+  rlsLib = getOption("langserver_library"),
+  strictLibrary = TRUE,
+  fullReinstall = TRUE,
+  fromGitHub = TRUE,
+  confirmBeforeInstall = TRUE,
+  dryRun = FALSE,
+  ...
+)
 }
 \arguments{
 \item{rlsLib}{\code{character(1)}, path to the library where the

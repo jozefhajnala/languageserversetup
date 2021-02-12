@@ -4,10 +4,13 @@
 \alias{languageserver_startup}
 \title{Prepare language server to be started}
 \usage{
-languageserver_startup(rlsLib = getOption("langserver_library"),
+languageserver_startup(
+  rlsLib = getOption("langserver_library"),
   langServerProcessPatt = getOption("langserver_processPatt"),
-  strictLibrary = TRUE, os = tolower(Sys.info()[["sysname"]]),
-  pid = Sys.getpid())
+  strictLibrary = TRUE,
+  os = tolower(Sys.info()[["sysname"]]),
+  pid = Sys.getpid()
+)
 }
 \arguments{
 \item{rlsLib}{\code{character(1)}, path to the library where the
