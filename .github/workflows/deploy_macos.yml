@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Check macos-elcapitan-release
+    - name: Check macos-highsierra-release
       env:
         DOCKER_LOGIN_TOKEN: ${{ secrets.DOCKER_LOGIN_TOKEN }}
         LANGSERVERSETUP_RUN_DEPLOY: true
-      run: sh ci/docker_stage.sh ci/check_rhub.R "macos-elcapitan-release"
+      run: sh ci/docker_stage.sh ci/check_rhub.R "macos-highsierra-release"

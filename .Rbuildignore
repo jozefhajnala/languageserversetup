@@ -3,3 +3,4 @@
 ^.github
 ^ci
 .lintr
+Dockerfile

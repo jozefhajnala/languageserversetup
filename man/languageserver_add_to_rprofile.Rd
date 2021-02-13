@@ -4,9 +4,12 @@
 \alias{languageserver_add_to_rprofile}
 \title{Add language server initialization to \code{.Rprofile}}
 \usage{
-languageserver_add_to_rprofile(rlsLib = getOption("langserver_library"),
-  rprofilePath = locate_rprofile(), confirmBeforeChanging = TRUE,
-  code = append_code(rlsLib = rlsLib))
+languageserver_add_to_rprofile(
+  rlsLib = getOption("langserver_library"),
+  rprofilePath = locate_rprofile(),
+  confirmBeforeChanging = TRUE,
+  code = append_code(rlsLib = rlsLib)
+)
 }
 \arguments{
 \item{rlsLib}{\code{character(1)}, path to the library where the
