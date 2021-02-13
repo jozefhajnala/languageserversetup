@@ -11,6 +11,8 @@ languageserver_install(
   fromGitHub = TRUE,
   confirmBeforeInstall = TRUE,
   dryRun = FALSE,
+  ref = "master",
+  Ncpus = max(1L, getOption("Ncpus")),
   ...
 )
 }
@@ -27,7 +29,7 @@ in \code{.libPaths()} will be installed.}
 recursively removed to re-install all the packages cleanly.}
 
 \item{fromGitHub}{\code{logical(1)}, if \code{TRUE}, will use
-\code{install-github.me} to install the current development version
+the remotes package to install the current development version
 from GitHub. Otherwise \code{install.packages()} is used to install
 the \code{languageserver} package from CRAN.}
 
@@ -37,6 +39,14 @@ use, \code{FALSE} will skip the confirmation.}
 
 \item{dryRun}{\code{logical(1)}, if \code{TRUE}, most actions will only be
 reported, not taken - nothing will be removed, created or installed.}
+
+\item{ref}{\code{character(1)}, when \code{fromGitHub} is \code{TRUE}, ref is the
+desired git reference. Usually a commit, tag, or branch name.}
+
+\item{Ncpus}{\code{integer(1)}, number of the number of parallel processes
+to use for a parallel install of more than one source package.
+Values greater than one are supported if the make command specified
+by \code{Sys.getenv("MAKE", "make")} accepts argument \verb{-k -j Ncpus}.}
 
 \item{...}{further arguments passed to \code{install.packages()} in case
 \code{fromGitHub} is set to \code{FALSE}.}
