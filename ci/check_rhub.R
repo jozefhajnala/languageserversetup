@@ -12,11 +12,19 @@ if (!is.element(platform, c("cran", rhub::platforms()[[1L]]))) {
 if (platform == "cran") {
   system("apt-get update && apt-get -y install libxml2-dev")
   install.packages("xml2")
-  cr <- rhub::check_for_cran(
+  platforms <- unique(c(
+    grep("solaris", rhub::platforms()[[1L]], fixed = TRUE, value = TRUE)[[1L]],
+    rhub:::default_cran_check_platforms(".")
+  ))
+  cr <- rhub::check(
+    platform = platforms,
     show_status = TRUE,
     env_vars = c(
       `_R_CHECK_CRAN_INCOMING_REMOTE_` = "false",
-      Sys.getenv("LANGSERVERSETUP_RUN_DEPLOY", names = TRUE)
+      `_R_CHECK_FORCE_SUGGESTS_` = "true",
+      `_R_CHECK_CRAN_INCOMING_USE_ASPELL_` = "true",
+      `R_COMPILE_AND_INSTALL_PACKAGES` = "always",
+      `_R_CHECK_SYSTEM_CLOCK_` = "false"
     )
   )
 } else {
